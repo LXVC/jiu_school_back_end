@@ -7,7 +7,7 @@ env.hosts = config.evn['hosts']
 env.password = config.evn['password']
 
 inter_path = '/home/ubuntu/django_inter/bin/'
-app_path = '/home/ubuntu/jiu_school_back_end'
+app_path = '/home/ubuntu/jiu_school_back_end/'
 host = '0.0.0.0:8000'
 
 def update():
@@ -18,4 +18,5 @@ def update():
         finally:
             run('git pull')
             run(inter_path + 'pip install' + ' -r requirement.txt')
-            run('nohup ' + inter_path + 'python '  + app_path + '/src/manage.py' +' runserver ' + host)
+            run(inter_path + 'python '  + app_path + 'src/manage.py' + ' migrate')
+            run('nohup ' + inter_path + 'python '  + app_path + 'src/manage.py' +' runserver ' + host)
