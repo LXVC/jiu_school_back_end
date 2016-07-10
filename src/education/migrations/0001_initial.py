@@ -11,6 +11,24 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
+            name='Area',
+            fields=[
+                ('id', models.IntegerField(serialize=False, primary_key=True)),
+                ('path', models.CharField(max_length=200)),
+                ('name', models.CharField(max_length=50)),
+                ('short_name', models.CharField(max_length=50)),
+                ('longitude', models.FloatField()),
+                ('latitude', models.FloatField()),
+                ('level', models.SmallIntegerField()),
+                ('sort', models.IntegerField()),
+                ('status', models.SmallIntegerField()),
+                ('parent_id', models.ForeignKey(to='education.Area', db_column=b'parent_id')),
+            ],
+            options={
+                'db_table': 'area',
+            },
+        ),
+        migrations.CreateModel(
             name='CodeAccountType',
             fields=[
                 ('id', models.IntegerField(serialize=False, primary_key=True)),
@@ -19,6 +37,16 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'code_account_type',
+            },
+        ),
+        migrations.CreateModel(
+            name='CodeEduPeriod',
+            fields=[
+                ('id', models.IntegerField(serialize=False, primary_key=True)),
+                ('edu_period_name', models.CharField(max_length=20)),
+            ],
+            options={
+                'db_table': 'code_edu_period',
             },
         ),
         migrations.CreateModel(
@@ -33,10 +61,59 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
+            name='CodeUserStatus',
+            fields=[
+                ('id', models.IntegerField(serialize=False, primary_key=True)),
+                ('user_state_name', models.CharField(max_length=20)),
+            ],
+            options={
+                'db_table': 'code_user_status',
+            },
+        ),
+        migrations.CreateModel(
+            name='Org',
+            fields=[
+                ('id', models.IntegerField(serialize=False, primary_key=True)),
+                ('name', models.CharField(max_length=50)),
+                ('size', models.IntegerField()),
+                ('path', models.CharField(max_length=200)),
+                ('level', models.SmallIntegerField()),
+                ('sort', models.IntegerField()),
+                ('status', models.SmallIntegerField()),
+                ('created_date', models.DateTimeField()),
+                ('comments', models.CharField(max_length=500)),
+                ('area_id', models.ForeignKey(to='education.Area', db_column=b'area_id')),
+                ('edu_period', models.ForeignKey(to='education.CodeEduPeriod', db_column=b'edu_period')),
+                ('parent_id', models.ForeignKey(to='education.Org', db_column=b'parent_id')),
+            ],
+            options={
+                'db_table': 'org',
+            },
+        ),
+        migrations.CreateModel(
             name='User',
             fields=[
                 ('id', models.IntegerField(serialize=False, primary_key=True)),
                 ('account_id', models.CharField(max_length=100)),
+                ('username', models.CharField(max_length=50)),
+                ('login_name', models.CharField(max_length=50)),
+                ('md5passwdstr', models.CharField(max_length=300)),
+                ('geder', models.BooleanField()),
+                ('email', models.EmailField(max_length=254)),
+                ('phone', models.CharField(max_length=30)),
+                ('birthday', models.DateField()),
+                ('idcardnum', models.CharField(max_length=30)),
+                ('address', models.CharField(max_length=200)),
+                ('intro', models.CharField(max_length=500)),
+                ('qq', models.CharField(max_length=20)),
+                ('wechat', models.CharField(max_length=100)),
+                ('inschoolyears', models.IntegerField()),
+                ('create_date', models.DateTimeField(auto_now_add=True)),
+                ('last_login_date', models.DateTimeField()),
+                ('last_status_change_date', models.DateTimeField()),
+                ('permissgroucp', models.IntegerField()),
+                ('head_pic_url', models.CharField(max_length=1000)),
+                ('comments', models.CharField(max_length=500)),
             ],
             options={
                 'db_table': 'user',
@@ -47,10 +124,49 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.IntegerField(serialize=False, primary_key=True)),
                 ('permission_id', models.IntegerField()),
-                ('user_id', models.ForeignKey(verbose_name=b'user_id', to='education.User')),
             ],
             options={
                 'db_table': 'user_permissions',
             },
+        ),
+        migrations.CreateModel(
+            name='UserRelationInfo',
+            fields=[
+                ('user_id', models.ForeignKey(primary_key=True, db_column=b'user_id', serialize=False, to='education.User', unique=True)),
+                ('relation_type', models.CharField(max_length=10)),
+                ('relation_name', models.CharField(max_length=50)),
+                ('relation_phone', models.CharField(max_length=32)),
+                ('relation_email', models.EmailField(max_length=254)),
+                ('relation_address', models.CharField(max_length=200)),
+                ('comments', models.CharField(max_length=500)),
+            ],
+            options={
+                'db_table': 'user_relation_info',
+            },
+        ),
+        migrations.AddField(
+            model_name='userpermissions',
+            name='user_id',
+            field=models.ForeignKey(to='education.User', db_column=b'user_id'),
+        ),
+        migrations.AddField(
+            model_name='user',
+            name='account_type',
+            field=models.ForeignKey(to='education.CodeAccountType', db_column=b'account_type'),
+        ),
+        migrations.AddField(
+            model_name='user',
+            name='org_id',
+            field=models.ForeignKey(to='education.Org', db_column=b'org_id'),
+        ),
+        migrations.AddField(
+            model_name='user',
+            name='role',
+            field=models.ForeignKey(to='education.CodeRole', db_column=b'role'),
+        ),
+        migrations.AddField(
+            model_name='user',
+            name='status',
+            field=models.ForeignKey(to='education.CodeUserStatus', db_column=b'status'),
         ),
     ]

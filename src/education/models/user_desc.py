@@ -1,10 +1,9 @@
 # -*- coding:utf-8 -*-
-from django.db.models import Model, CharField, IntegerField, ForeignKey
-from .user import User
+from django.db.models import Model, CharField, IntegerField
 
 
 class CodeRole(Model):
-    # 用户身份表
+    # 用户角色表
     id = IntegerField(primary_key=True)
     role_name = CharField(max_length=20)
     comments = CharField(max_length=500)
@@ -25,11 +24,11 @@ class CodeAccountType(Model):
         db_table = 'code_account_type'
 
 
-class UserPermissions(Model):
+class CodeUserStatus(Model):
+    # 账户状态表
     id = IntegerField(primary_key=True)
-    user = ForeignKey(User, verbose_name='user_id')
-    permission_id = IntegerField()
+    user_state_name = CharField(max_length=20)
 
     class Meta:
         app_label = 'education'
-        db_table = 'user_permissions'
+        db_table = 'code_user_status'
