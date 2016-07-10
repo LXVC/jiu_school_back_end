@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from django.db.models import Model, CharField, IntegerField, EmailField,ForeignKey
+from django.db.models import Model, CharField, IntegerField, EmailField, ForeignKey, OneToOneField
 from .user import User
 
 
@@ -16,7 +16,7 @@ class UserPermissions(Model):
 
 class UserRelationInfo(Model):
     # 用户亲属关系表
-    user_id = ForeignKey(User, primary_key=True, db_column='user_id', unique=True)
+    user_id = OneToOneField(User, primary_key=True, db_column='user_id')
     relation_type = CharField(max_length=10)
     relation_name = CharField(max_length=50)
     relation_phone = CharField(max_length=32)
