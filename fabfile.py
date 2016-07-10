@@ -18,4 +18,4 @@ def update():
         finally:
             run('git pull')
             run(inter_path + 'pip install' + ' -r requirement.txt')
-            run('nohup ' + inter_path + 'python '  + app_path + '/school/manage.py' +' runserver ' + host)
+            run('nohup ' + inter_path + 'python '  + app_path + '/src/manage.py' +' runserver ' + host)
