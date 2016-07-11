@@ -53,3 +53,13 @@ class User(Model):
     class Meta:
         app_label = 'education'
         db_table = 'user'
+
+
+class UserOrg(Model):
+    # 用户和组织多对多关系表
+    user = ForeignKey(User, db_column='user_id')
+    org = ForeignKey(Org, db_column='org_id')
+
+    class Meta:
+        app_label = 'education'
+        db_table = 'user_org'
