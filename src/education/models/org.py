@@ -5,7 +5,7 @@ from django.db.models import Model, CharField, IntegerField, ForeignKey, FloatFi
 class Area(Model):
     # 地区表
     id = IntegerField(primary_key=True)
-    parent_id = ForeignKey('self', db_column='parent_id')
+    parent_id = ForeignKey('self', db_column='parent_id', null=True, blank=True)
     path = CharField(max_length=200)
     name = CharField(max_length=50)
     short_name = CharField(max_length=50)
@@ -33,7 +33,7 @@ class CodeEduPeriod(Model):
 class Org(Model):
     # 组织模型表
     id = IntegerField(primary_key=True)
-    parent_id = ForeignKey('self', db_column='parent_id')
+    parent_id = ForeignKey('self', db_column='parent_id', null=True, blank=True)
     area_id = ForeignKey(Area, db_column='area_id')
     name = CharField(max_length=50)
     edu_period = ForeignKey(CodeEduPeriod, db_column='edu_period')
