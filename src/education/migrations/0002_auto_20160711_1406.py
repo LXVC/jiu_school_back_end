@@ -7,13 +7,13 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('education', '0003_auto_20160711_0840'),
+        ('education', '0001_initial'),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='area',
-            name='parent_id',
-            field=models.ForeignKey(db_column=b'parent_id', blank=True, to='education.Area', null=True),
+            model_name='codeaccounttype',
+            name='id',
+            field=models.AutoField(serialize=False, primary_key=True),
         ),
     ]

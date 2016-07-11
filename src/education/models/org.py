@@ -4,8 +4,7 @@ from django.db.models import Model, CharField, IntegerField, ForeignKey, FloatFi
 
 class Area(Model):
     # 地区表
-    id = IntegerField(primary_key=True)
-    parent_id = ForeignKey('self', db_column='parent_id', null=True, blank=True)
+    parent = ForeignKey('self', db_column='parent_id', null=True, blank=True)
     path = CharField(max_length=200)
     name = CharField(max_length=50)
     short_name = CharField(max_length=50)
@@ -22,7 +21,6 @@ class Area(Model):
 
 class CodeEduPeriod(Model):
     # 学段类别表
-    id = IntegerField(primary_key=True)
     edu_period_name = CharField(max_length=20)
 
     class Meta:
@@ -32,9 +30,8 @@ class CodeEduPeriod(Model):
 
 class Org(Model):
     # 组织模型表
-    id = IntegerField(primary_key=True)
-    parent_id = ForeignKey('self', db_column='parent_id', null=True, blank=True)
-    area_id = ForeignKey(Area, db_column='area_id')
+    parent = ForeignKey('self', db_column='parent_id', null=True, blank=True)
+    area = ForeignKey(Area, db_column='area_id')
     name = CharField(max_length=50)
     edu_period = ForeignKey(CodeEduPeriod, db_column='edu_period')
     size = IntegerField()
@@ -43,8 +40,18 @@ class Org(Model):
     sort = IntegerField()
     status = SmallIntegerField()
     created_date = DateTimeField()
-    comments = CharField(max_length=500)
+    comments = CharField(max_length=500, blank=True)
 
     class Meta:
         app_label = 'education'
         db_table = 'org'
+
+
+class KeySchool(Model):
+    # 重点学校
+    org = ForeignKey(Org, db_column='org_id')
+    type = IntegerField()
+
+    class Meta:
+        app_label = 'education'
+        db_table = 'keyschool'

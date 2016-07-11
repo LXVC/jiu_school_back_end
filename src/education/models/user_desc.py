@@ -1,12 +1,11 @@
 # -*- coding:utf-8 -*-
-from django.db.models import Model, CharField, IntegerField
+from django.db.models import Model, CharField, IntegerField, AutoField
 
 
 class CodeRole(Model):
     # 用户角色表
-    id = IntegerField(primary_key=True)
     role_name = CharField(max_length=20)
-    comments = CharField(max_length=500)
+    comments = CharField(max_length=500, blank=True)
 
     class Meta:
         app_label = 'education'
@@ -15,9 +14,8 @@ class CodeRole(Model):
 
 class CodeAccountType(Model):
     # 用户账户类型表
-    id = IntegerField(primary_key=True)
     acc_type_name = CharField(max_length=20)
-    comments = CharField(max_length=500)
+    comments = CharField(max_length=500, blank=True)
 
     class Meta:
         app_label = 'education'
@@ -26,7 +24,6 @@ class CodeAccountType(Model):
 
 class CodeUserStatus(Model):
     # 账户状态表
-    id = IntegerField(primary_key=True)
     user_state_name = CharField(max_length=20)
 
     class Meta:
