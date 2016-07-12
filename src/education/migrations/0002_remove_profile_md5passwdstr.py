@@ -11,9 +11,8 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AlterField(
-            model_name='codeaccounttype',
-            name='id',
-            field=models.AutoField(serialize=False, primary_key=True),
+        migrations.RemoveField(
+            model_name='profile',
+            name='md5passwdstr',
         ),
     ]

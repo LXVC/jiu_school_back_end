@@ -1,18 +1,21 @@
 # -*- coding:utf-8 -*-
-from hashlib import md5
-from django.db.models import Model, CharField, IntegerField, BooleanField, EmailField, DateField, DateTimeField,ForeignKey
+from django.db.models import Model, CharField, IntegerField, BooleanField, EmailField, DateField, DateTimeField,\
+    ForeignKey, OneToOneField
+from django.contrib.auth.models import User
 from .user_desc import CodeAccountType, CodeRole, CodeUserStatus
 from .org import Org
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
-class User(Model):
+class Profile(Model):
     # 用户表
+    user = OneToOneField(User, db_column='id', primary_key=True)
     account_id = CharField(max_length=100)
     account_type = ForeignKey(CodeAccountType, db_column='account_type')
     role = ForeignKey(CodeRole, db_column='role')
     username = CharField(max_length=50)
     login_name = CharField(max_length=50)
-    md5passwdstr = CharField(max_length=300)
+    md5passwdstr = CharField(max_length=300, blank=True)
     status = ForeignKey(CodeUserStatus, db_column="status")
     org_id = ForeignKey(Org, db_column='org_id')
     gender = BooleanField()
@@ -32,24 +35,6 @@ class User(Model):
     head_pic_url = CharField(max_length=1000)
     comments = CharField(max_length=500, blank=True)
 
-    @property
-    def md5passwdstr(self):
-        raise AttributeError('No Passwd')
-
-    @md5passwdstr.setter
-    def md5passwdstr(self, passwd):
-        md = md5('qzw')
-        md.update(passwd)
-        self.md5passwdstr = md.hexdigest()
-
-    def verify_password(self, passwd):
-        md = md5('qzw')
-        md.update(passwd)
-        if md.hexdigest() is self.md5passwdstr:
-            return True
-        else:
-            return False
-
     class Meta:
         app_label = 'education'
         db_table = 'user'
@@ -63,3 +48,5 @@ class UserOrg(Model):
     class Meta:
         app_label = 'education'
         db_table = 'user_org'
+
+
