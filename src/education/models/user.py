@@ -4,7 +4,6 @@ from django.db.models import Model, CharField, IntegerField, BooleanField, Email
 from django.contrib.auth.models import User
 from .user_desc import CodeAccountType, CodeRole, CodeUserStatus
 from .org import Org
-from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
 class Profile(Model):
