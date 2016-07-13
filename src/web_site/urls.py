@@ -20,7 +20,7 @@ from education.views import CreateToken
 
 urlpatterns = [
     url(r'^admin/v1/', include(admin.site.urls)),
+    url(r'^api/v1/auth', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/v1/get-token', CreateToken.as_view()),
     url(r'^api/v1/', include('education.urls', namespace='education')),
-    url(r'^api-auth/v1/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api-get-token/v1', CreateToken.as_view())
 ]
