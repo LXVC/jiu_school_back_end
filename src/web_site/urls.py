@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from education.views import CreateToken
+from education.api import CreateToken
 
 urlpatterns = [
     url(r'^admin/v1/', include(admin.site.urls)),

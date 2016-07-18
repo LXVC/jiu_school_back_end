@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from django.db.models import Model, CharField, IntegerField, AutoField
+from django.db.models import Model, CharField
 
 
 class CodeRole(Model):

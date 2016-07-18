@@ -1,14 +1,14 @@
 # -*- coding:utf-8 -*-
-from django.db.models import Model, CharField, IntegerField, BooleanField, EmailField, DateField, DateTimeField,\
-    ForeignKey, OneToOneField
+from django.db.models import Model, CharField, IntegerField,\
+    BooleanField, EmailField, DateField, DateTimeField, ForeignKey, OneToOneField
 from django.contrib.auth.models import User
 from .user_desc import CodeAccountType, CodeRole, CodeUserStatus
 from .org import Org
 
 
 class Profile(Model):
-    # 用户表
-    user = OneToOneField(User, db_column='id', primary_key=True)
+    # 用户配置表
+    user = OneToOneField(User, db_column='id', primary_key=True, related_name='profile')
     account_id = CharField(max_length=100)
     account_type = ForeignKey(CodeAccountType, db_column='account_type')
     role = ForeignKey(CodeRole, db_column='role')

@@ -1,13 +1,15 @@
 # -*- coding:utf-8 -*-
-from django.db.models import Model, CharField, IntegerField, EmailField, ForeignKey, DateTimeField, OneToOneField
-from .user import User
+
+from django.db.models import Model, CharField, EmailField, ForeignKey, DateTimeField, OneToOneField
+from .user import Profile
 from .user_desc import CodeUserStatus
+from django.contrib.auth.models import Permission,Group
 
 
 class UserPermissions(Model):
     # 用户权限表
-    user = ForeignKey(User, db_column='user_id')
-    permission = IntegerField(db_column='permission_id', default=0)
+    user = ForeignKey(Profile, db_column='user_id')
+    permission = ForeignKey(Permission, db_column='permission_id', default=0)
 
     class Meta:
         app_label = 'education'
@@ -16,7 +18,7 @@ class UserPermissions(Model):
 
 class UserRelationInfo(Model):
     # 用户亲属关系表
-    user = OneToOneField(User, primary_key=True, db_column='user_id')
+    user = OneToOneField(Profile, primary_key=True, db_column='user_id')
     relation_type = CharField(max_length=10)
     relation_name = CharField(max_length=50)
     relation_phone = CharField(max_length=32)
@@ -31,14 +33,23 @@ class UserRelationInfo(Model):
 
 class UserStatusChangeLog(Model):
     # 用户状态变化表
-    use = ForeignKey(User, db_column='user_id', related_name='who')
+    user = ForeignKey(Profile, db_column='user_id')
     old_status = ForeignKey(CodeUserStatus, db_column='old_status', related_name='old_status')
     new_status = ForeignKey(CodeUserStatus, db_column='new_status', related_name='new_status')
     change_date = DateTimeField()
     resason = CharField(max_length=500)
-    oper = ForeignKey(User, db_column='oper', related_name='operator')
+    oper = ForeignKey(Profile, db_column='oper', related_name='operator')
 
     class Meta:
         app_label = 'education'
         db_table = 'user_status_change_log'
 
+
+class UserGroup(Model):
+    # 用户权限组关系表
+    user = ForeignKey(Profile, db_column='user_id')
+    group = ForeignKey(Group, db_column='group_id')
+
+    class Meta:
+        app_label = 'education'
+        db_table = 'user_group'
