@@ -25,3 +25,9 @@ def update(drop_data=None):
             if drop_data is not None:
                 run(inter_path + 'python '  + app_path + 'src/manage.py' + ' test')
             run('nohup ' + inter_path + 'python '  + app_path + 'src/manage.py' +' runserver ' + host)
+
+
+
+def init():
+    with cd(app_path + 'src'):
+        run(inter_path + 'python '  + app_path + 'src/manage.py' + ' test')
