@@ -5,14 +5,14 @@ from django.db.models import Model, CharField, IntegerField, ForeignKey, FloatFi
 class Area(Model):
     # 地区表
     parent = ForeignKey('self', db_column='parent_id', null=True, blank=True)
-    path = CharField(max_length=200)
-    name = CharField(max_length=50)
-    short_name = CharField(max_length=50)
-    longitude = FloatField()
-    latitude = FloatField()
-    level = SmallIntegerField()
-    sort = IntegerField()
-    status = SmallIntegerField()
+    path = CharField(max_length=200, blank=True)
+    name = CharField(max_length=50, blank=True)
+    short_name = CharField(max_length=50, blank=True)
+    longitude = FloatField(blank=True, default=1.1)
+    latitude = FloatField(blank=True, default=2.2)
+    level = SmallIntegerField(blank=True, default=4)
+    sort = IntegerField(blank=True, default=1)
+    status = SmallIntegerField(blank=True, default=2)
 
     class Meta:
         app_label = 'education'
@@ -21,7 +21,7 @@ class Area(Model):
 
 class CodeEduPeriod(Model):
     # 学段类别表
-    edu_period_name = CharField(max_length=20)
+    edu_period_name = CharField(max_length=20, blank=True, default='小学')
 
     class Meta:
         app_label = 'education'
@@ -32,14 +32,14 @@ class Org(Model):
     # 组织模型表
     parent = ForeignKey('self', db_column='parent_id', null=True, blank=True)
     area = ForeignKey(Area, db_column='area_id')
-    name = CharField(max_length=50)
+    name = CharField(max_length=50, blank=True, default='XX中学')
     edu_period = ForeignKey(CodeEduPeriod, db_column='edu_period')
-    size = IntegerField()
-    path = CharField(max_length=200)
-    level = SmallIntegerField()
-    sort = IntegerField()
-    status = SmallIntegerField()
-    created_date = DateTimeField()
+    size = IntegerField(blank=True, default=1200)
+    path = CharField(max_length=200, default='湖南', blank=True)
+    level = SmallIntegerField(blank=True, default=1)
+    sort = IntegerField(blank=True, default=2)
+    status = SmallIntegerField(default=0, blank=2)
+    created_date = DateTimeField(blank=True, auto_now_add=True)
     comments = CharField(max_length=500, blank=True)
 
     class Meta:
@@ -50,7 +50,7 @@ class Org(Model):
 class KeySchool(Model):
     # 重点学校
     org = ForeignKey(Org, db_column='org_id')
-    type = IntegerField()
+    type = IntegerField(blank=True, default=10)
 
     class Meta:
         app_label = 'education'

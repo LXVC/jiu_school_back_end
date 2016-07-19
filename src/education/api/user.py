@@ -5,15 +5,15 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 
-from education.serializers import UserSerializers
+from education.api.serializers import UserSerializers
 
 
-class UsersViewSet(viewsets.ReadOnlyModelViewSet):
+class UsersViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializers
 
     def list(self, request, *args, **kwargs):
-        queryset = User.objects.all()[:2]
+        queryset = User.objects.all()
         serializer = UserSerializers(queryset, many=True)
         return Response(serializer.data)
 

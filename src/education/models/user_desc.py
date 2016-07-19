@@ -4,7 +4,7 @@ from django.db.models import Model, CharField
 
 class CodeRole(Model):
     # 用户角色表
-    role_name = CharField(max_length=20)
+    role_name = CharField(max_length=20, blank=True, default='学生')
     comments = CharField(max_length=500, blank=True)
 
     class Meta:
@@ -14,7 +14,7 @@ class CodeRole(Model):
 
 class CodeAccountType(Model):
     # 用户账户类型表
-    acc_type_name = CharField(max_length=20)
+    acc_type_name = CharField(max_length=20, blank=True, default='13788740727')
     comments = CharField(max_length=500, blank=True)
 
     class Meta:
