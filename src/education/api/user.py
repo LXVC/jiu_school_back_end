@@ -28,4 +28,5 @@ class CreateToken(ObtainAuthToken):
             token.delete()
         finally:
             token = Token.objects.create(user=user)
-            return Response({'token': token.key})
+            return Response({'token': token.key,
+                             'id': token.user_id})
