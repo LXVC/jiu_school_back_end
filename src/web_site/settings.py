@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'education',
     'rest_framework',
     'rest_framework.authtoken',
+    'question',
 )
 
 MIDDLEWARE_CLASSES = (
