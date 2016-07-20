@@ -59,7 +59,7 @@ class CodeSubmitStatus(Model):
                ('完成', '完成'),
                ('草稿', '草稿'),
                ('过期', '过期'),)
-    submit_status_name = CharField(choices=stastus)
+    submit_status_name = CharField(max_length=20, choices=stastus)
 
     class Meta:
         app_label = 'question'
