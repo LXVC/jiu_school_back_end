@@ -2,6 +2,7 @@
 from django.db.models import Model, ForeignKey, CharField, IntegerField, DateTimeField
 from .question import Question
 from django.contrib.auth.models import User
+from education.models import Org
 
 
 class QuestionsDyndifficulty(Model):
@@ -16,11 +17,10 @@ class QuestionsDyndifficulty(Model):
 
 
 class KnowegePoint(Model):
-    idx = CharField(primary_key=True, max_length=100)
     title = CharField(max_length=100)
-    ref_count = IntegerField()
-    created_by = ForeignKey(User, db_column='created_by')
-    owner = ForeignKey(User, db_column='owner', related_name='knowege_points')
+    ref_count = IntegerField(default=0)
+    created_by = ForeignKey(User, db_column='created_by', related_name='created_knowege_points')
+    owner = ForeignKey(Org, db_column='owner', related_name='own_knowege_points')
     created_date = DateTimeField(auto_now_add=True)
 
     class Meta:

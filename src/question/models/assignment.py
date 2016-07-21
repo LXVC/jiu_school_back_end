@@ -1,9 +1,10 @@
 # -*- coding:utf-8 -*-
 from django.db.models import Model, ForeignKey, CharField, \
     IntegerField, DateTimeField, NullBooleanField, TextField
-from .question import Question
 from django.contrib.auth.models import User
 from education.models import Org
+from .question import Question
+from .question_desc import Charpter
 
 
 class CodeAssignmentStatus(Model):
@@ -15,7 +16,7 @@ class CodeAssignmentStatus(Model):
 
 
 class CodeAssignmentType(Model):
-    assignment_type_name = CharField(max_length=50)
+    assignment_type_name = CharField(max_length=50, default='日常作业')
 
     class Meta:
         app_label = 'question'
@@ -26,8 +27,8 @@ class Assignment(Model):
     title = CharField(max_length=30)
     questhion_num = IntegerField(default=2)
     created_by = ForeignKey(User, db_column='created_by', related_name='created_assignment')
-    charpter = IntegerField(default=1)
-    owner = IntegerField(default=1)
+    charpter = ForeignKey(Charpter, db_column='charpter_id', related_name='assignments')
+    owner = ForeignKey(Org, db_column='owner', related_name='own_assignments')
     status = ForeignKey(CodeAssignmentStatus, db_column='status')
     published_count = IntegerField(default=1)
     created_date = DateTimeField(auto_now_add=True)
@@ -67,7 +68,7 @@ class CodeSubmitStatus(Model):
 
 
 class AssignmentSubmit(Model):
-    assignment_publish = ForeignKey(AssignmentPublish, db_column='assignment_publish')
+    assignment_publish = ForeignKey(AssignmentPublish, db_column='assignment_publish_id')
     context = TextField()
     submiter = ForeignKey(User, db_column='submiter')
     status = ForeignKey(CodeSubmitStatus, db_column='status')

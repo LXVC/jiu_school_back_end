@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.db.models import Model, ForeignKey, CharField, BooleanField, SmallIntegerField
 from education.models import Org
-from django.contrib.auth.models import User
 
 
 class Library(Model):
