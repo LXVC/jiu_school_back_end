@@ -16,7 +16,7 @@ class Profile(Model):
     login_name = CharField(max_length=50, blank=True)
     md5passwdstr = CharField(max_length=300, blank=True)
     status = ForeignKey(CodeUserStatus, db_column="status")
-    org_id = ForeignKey(Org, db_column='org_id')
+    org = ForeignKey(Org, db_column='org_id', related_name='users', null=True, blank=True)
     gender = BooleanField(default=True)                 # True 为男性
     email = EmailField(blank=True)
     phone = CharField(max_length=30, blank=True)

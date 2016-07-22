@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
-from django.db.models import Model, CharField, IntegerField, ForeignKey, FloatField, SmallIntegerField, DateTimeField
+from django.db.models import Model, CharField, IntegerField, ForeignKey, \
+    FloatField, SmallIntegerField, DateTimeField
 
 
 class Area(Model):
@@ -37,6 +38,7 @@ class Org(Model):
     size = IntegerField(blank=True, default=1200)
     path = CharField(max_length=200, default='湖南', blank=True)
     level = SmallIntegerField(blank=True, default=1)
+    type = CharField(max_length=10, default='')
     sort = IntegerField(blank=True, default=2)
     status = SmallIntegerField(default=0, blank=2)
     created_date = DateTimeField(blank=True, auto_now_add=True)
