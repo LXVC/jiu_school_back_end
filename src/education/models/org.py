@@ -22,7 +22,7 @@ class Area(Model):
 
 class CodeEduPeriod(Model):
     # 学段类别表
-    edu_period_name = CharField(max_length=20, blank=True, default='小学')
+    edu_period_name = CharField(max_length=20, blank=True, default='中学')
 
     class Meta:
         app_label = 'education'

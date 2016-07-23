@@ -14,7 +14,7 @@ class CodeRole(Model):
 
 class CodeAccountType(Model):
     # 用户账户类型表
-    acc_type_name = CharField(max_length=20, blank=True, default='13788740727')
+    acc_type_name = CharField(max_length=20, default='手机号')
     comments = CharField(max_length=500, blank=True)
 
     class Meta:
@@ -24,7 +24,7 @@ class CodeAccountType(Model):
 
 class CodeUserStatus(Model):
     # 账户状态表
-    user_state_name = CharField(max_length=20)
+    user_state_name = CharField(max_length=20, default='在线')
 
     class Meta:
         app_label = 'education'
