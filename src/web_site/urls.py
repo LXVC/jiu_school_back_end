@@ -16,15 +16,18 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from education.api import CreateToken, UsersViewSet
+from education.api import CreateToken, UsersViewSet, UsersProfileViewSet, OrgViewSet, NoticeViewSet
 from rest_framework import routers
 
 apiRouter = routers.DefaultRouter()
 apiRouter.register(r'users', UsersViewSet, 'Users')
+apiRouter.register(r'profile', UsersProfileViewSet, 'Profile')
+apiRouter.register(r'org', OrgViewSet, 'Org')
+apiRouter.register(r'notices', NoticeViewSet, 'Notice')
 
 urlpatterns = [
     url(r'^admin/v1/', include(admin.site.urls)),
     url(r'^api/v1/auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api/v1/get-token/',  CreateToken.as_view()),
+    url(r'^api/v1/get-token/', CreateToken.as_view()),
     url(r'^api/v1/', include(apiRouter.urls)),
 ]

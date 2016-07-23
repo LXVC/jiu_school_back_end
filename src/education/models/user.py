@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from django.db.models import Model, CharField, IntegerField,\
+from django.db.models import Model, CharField, IntegerField, \
     BooleanField, EmailField, DateField, DateTimeField, ForeignKey, OneToOneField
 from django.contrib.auth.models import User
 from .user_desc import CodeAccountType, CodeRole, CodeUserStatus
@@ -17,7 +17,7 @@ class Profile(Model):
     md5passwdstr = CharField(max_length=300, blank=True)
     status = ForeignKey(CodeUserStatus, db_column="status")
     org = ForeignKey(Org, db_column='org_id', related_name='users', null=True, blank=True)
-    gender = BooleanField(default=True)                 # True 为男性
+    gender = BooleanField(default=True)  # True 为男性
     email = EmailField(blank=True)
     phone = CharField(max_length=30, blank=True)
     birthday = DateField(blank=True)
@@ -47,5 +47,3 @@ class UserOrg(Model):
     class Meta:
         app_label = 'education'
         db_table = 'user_org'
-
-
