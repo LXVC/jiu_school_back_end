@@ -17,8 +17,8 @@ class Notice(Model):
 
 class NoticeTo(Model):
     notice = ForeignKey(Notice, db_column='notice_id')
-    user = ForeignKey(User, db_column='user_id', null=True, related_name='notices')
-    org = ForeignKey(Org, db_column='org_id', null=True, related_name='notices')
+    user = ForeignKey(User, db_column='user_id', null=True, related_name='notices', blank=True)
+    org = ForeignKey(Org, db_column='org_id', null=True, related_name='notices', blank=True)
 
     class Meta:
         app_label = 'education'
