@@ -8,42 +8,50 @@ from .org import Org
 
 class Profile(Model):
     # 用户配置表
-    user = OneToOneField(User, db_column='id', primary_key=True, related_name='profile')
+    user = OneToOneField(User, db_column='id', primary_key=True, related_name='profile', verbose_name='用户')
     account_id = CharField(max_length=100, blank=True)
-    account_type = ForeignKey(CodeAccountType, db_column='account_type')
-    role = ForeignKey(CodeRole, db_column='role')
-    username = CharField(max_length=50, blank=True)
-    login_name = CharField(max_length=50, blank=True)
+    account_type = ForeignKey(CodeAccountType, db_column='account_type', verbose_name='帐号类型')
+    role = ForeignKey(CodeRole, db_column='role', verbose_name='用户身份')
+    username = CharField(max_length=50, blank=True, verbose_name='用户姓名')
+    login_name = CharField(max_length=50, blank=True, verbose_name='昵称')
     md5passwdstr = CharField(max_length=300, blank=True)
-    status = ForeignKey(CodeUserStatus, db_column="status")
-    org = ForeignKey(Org, db_column='org_id', related_name='users', null=True, blank=True)
-    gender = BooleanField(default=True)  # True 为男性
-    email = EmailField(blank=True)
-    phone = CharField(max_length=30, blank=True)
-    birthday = DateField(blank=True)
-    idcardnum = CharField(max_length=30, blank=True)
-    address = CharField(max_length=200, blank=True)
-    intro = CharField(max_length=500, blank=True)
-    qq = CharField(max_length=20, blank=True)
-    wechat = CharField(max_length=100, blank=True)
-    inschoolyears = IntegerField(blank=True, default=2013)
+    status = ForeignKey(CodeUserStatus, db_column="status", verbose_name='帐号状态')
+    gender = BooleanField(default=True, verbose_name='性别')  # True 为男性
+    email = EmailField(blank=True, verbose_name='邮箱')
+    phone = CharField(max_length=30, blank=True, verbose_name='手机号')
+    birthday = DateField(blank=True, verbose_name='生日')
+    idcardnum = CharField(max_length=30, blank=True, verbose_name='')
+    address = CharField(max_length=200, blank=True, verbose_name='家庭住址')
+    intro = CharField(max_length=500, blank=True, verbose_name='个人简介')
+    qq = CharField(max_length=20, blank=True, verbose_name='QQ')
+    wechat = CharField(max_length=100, blank=True, verbose_name='微信')
+    inschoolyears = IntegerField(blank=True, default=2013, verbose_name='入学年份')
     create_date = DateTimeField(auto_now_add=True)
     last_login_date = DateTimeField(blank=True)
     last_status_change_date = DateTimeField(blank=True)
-    permissgroucp = IntegerField(blank=True, default=2)
-    head_pic_url = CharField(max_length=1000, blank=True)
-    comments = CharField(max_length=500, blank=True)
+    head_pic_url = CharField(max_length=1000, blank=True, verbose_name='头像图片')
+    comments = CharField(max_length=500, blank=True, verbose_name='备注')
 
     class Meta:
         app_label = 'education'
         db_table = 'user'
+        verbose_name = '用户信息'
+        verbose_name_plural = '用户信息'
+
+    def __unicode__(self):
+        return '{0}'.format(self.user.username)
 
 
 class UserOrg(Model):
     # 用户和组织多对多关系表
-    user = ForeignKey(User, db_column='user_id')
-    org = ForeignKey(Org, db_column='org_id')
+    user = ForeignKey(User, db_column='user_id', verbose_name='用户')
+    org = ForeignKey(Org, db_column='org_id', verbose_name='组织')
 
     class Meta:
         app_label = 'education'
         db_table = 'user_org'
+        verbose_name = '用户和组织的关系'
+        verbose_name_plural = '用户和组织的关系'
+
+    def __unicode__(self):
+        return u'{0}@{1}'.format(self.user.username, self.org.name)

@@ -24,12 +24,11 @@ class UserSerializers(serializers.ModelSerializer):
 
 
 class ProfileSerializers(serializers.ModelSerializer):
-    # user = serializers.ReadOnlyField(source='user.name')
-    org = serializers.ReadOnlyField(source='org.name')
+    user = serializers.ReadOnlyField(source='user.pk')
 
     class Meta:
         model = Profile
-        fields = ('user', 'email', 'org')
+        fields = ('user', 'email')
 
 
 class OrgSerializers(serializers.ModelSerializer):

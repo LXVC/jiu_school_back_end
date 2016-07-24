@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.utils import timezone
 from .models.user_desc import CodeRole, CodeAccountType, CodeUserStatus
 from django.contrib.auth.models import User
-from .models.user import Profile
+from .models.user import Profile, UserOrg
 from .models.org import Area, CodeEduPeriod, Org, KeySchool
 from .models.notice import Notice, NoticeTo
 
@@ -42,11 +42,15 @@ key_school.save()
 # init Profile 用户配置文件
 profile = Profile(user=User.objects.get(pk=2), account_id='13788740727', account_type=account_type,
                   role=role, username='qzw', login_name='lxvc', md5passwdstr='md5',
-                  status=user_status, org=org, email='403381161@qq.com', phone='13788740727',
+                  status=user_status, email='403381161@qq.com', phone='13788740727',
                   birthday=timezone.now(), idcardnum='...', address='中国湖南省衡阳市衡阳县渣江镇',
                   intro='成绩不错', qq='403381161', wechat='403381161', last_login_date=timezone.now(),
                   last_status_change_date=timezone.now(), head_pic_url='/static/avatar.png')
 profile.save()
+
+# init UserOrg 个人和组织的关系数据
+user_org = UserOrg(user=User.objects.get(pk=2), org=org)
+user_org.save()
 
 # init Notice 通知数据
 notice = Notice(title='十一放假通知', created_by=User.objects.get(pk=2), created_date=timezone.now(),

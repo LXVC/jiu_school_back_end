@@ -1,10 +1,16 @@
 from django.contrib import admin
-from .models import Profile
+from .models import Profile, UserOrg
 from .models.user_desc import CodeUserStatus, CodeAccountType, CodeRole
 from .models.org import Org, Area, CodeEduPeriod
 from .models.notice import Notice, NoticeTo
 
-admin.site.register(Profile)
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    pass
+
+
+admin.site.register(UserOrg)
 admin.site.register(CodeUserStatus)
 admin.site.register(CodeAccountType)
 admin.site.register(CodeRole)
