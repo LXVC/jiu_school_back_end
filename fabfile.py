@@ -22,8 +22,6 @@ def update(drop_data=None):
                 run('mysql -u root')
             run(inter_path + 'pip install' + ' -r requirement.txt')
             run(inter_path + 'python '  + app_path + 'src/manage.py' + ' migrate')
-            if drop_data is not None:
-                run(inter_path + 'python '  + app_path + 'src/manage.py' + ' test')
             run('nohup ' + inter_path + 'python '  + app_path + 'src/manage.py' +' runserver ' + host)
 
 
