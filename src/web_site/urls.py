@@ -18,12 +18,16 @@ from django.contrib import admin
 
 from education.api import CreateToken, UsersViewSet, UsersProfileViewSet, OrgViewSet, NoticeViewSet
 from rest_framework import routers
+from rest_framework.authtoken.models import Token
 
 apiRouter = routers.DefaultRouter()
 apiRouter.register(r'users', UsersViewSet, 'Users')
 apiRouter.register(r'profile', UsersProfileViewSet, 'Profile')
 apiRouter.register(r'org', OrgViewSet, 'Org')
 apiRouter.register(r'notices', NoticeViewSet, 'Notice')
+
+admin.site.unregister(Token)
+
 
 urlpatterns = [
     url(r'^admin/v1/', include(admin.site.urls)),
