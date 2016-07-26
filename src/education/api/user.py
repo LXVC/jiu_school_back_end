@@ -1,12 +1,13 @@
 # -*- coding:utf-8 -*-
 from django.contrib.auth.models import User
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 
-from education.models import Profile, Org, Notice, NoticeTo, UserOrg
-from education.api.serializers import UserSerializers, ProfileSerializers, OrgSerializers, NoticeSerializers
+from education.models import Profile, Org, Notice, NoticeTo, UserOrg, Version
+from education.api.serializers import UserSerializers, ProfileSerializers, \
+    OrgSerializers, NoticeSerializers, VersionSerializers
 from education.utils import convert_timezone
 
 
@@ -63,4 +64,14 @@ class NoticeViewSet(viewsets.ModelViewSet):
         for notice in all_notice:
             notice.created_date = convert_timezone(notice.created_date)
         serializer = NoticeSerializers(set(all_notice), many=True)
+        return Response(serializer.data)
+
+
+class VersionViewSet(viewsets.ModelViewSet):
+    queryset = Version.objects.all()
+    serializer_class = VersionSerializers
+
+    def list(self, request, *args, **kwargs):
+        queryset = Version.objects.all().last()
+        serializer = VersionSerializers(queryset)
         return Response(serializer.data)

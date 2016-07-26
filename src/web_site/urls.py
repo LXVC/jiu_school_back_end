@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from education.api import CreateToken, UsersViewSet, UsersProfileViewSet, OrgViewSet, NoticeViewSet
+from education.api import CreateToken, UsersViewSet, UsersProfileViewSet, OrgViewSet, NoticeViewSet, VersionViewSet
 from rest_framework import routers
 from rest_framework.authtoken.models import Token
 
@@ -25,9 +25,9 @@ apiRouter.register(r'users', UsersViewSet, 'Users')
 apiRouter.register(r'profile', UsersProfileViewSet, 'Profile')
 apiRouter.register(r'org', OrgViewSet, 'Org')
 apiRouter.register(r'notices', NoticeViewSet, 'Notice')
+apiRouter.register(r'version', VersionViewSet, 'Version')
 
 admin.site.unregister(Token)
-
 
 urlpatterns = [
     url(r'^admin/v1/', include(admin.site.urls)),

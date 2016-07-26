@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
-from django.db.models import Model, CharField, IntegerField, \
-    BooleanField, EmailField, DateField, DateTimeField, ForeignKey, OneToOneField
+from django.db.models import Model, CharField, IntegerField, TextField, \
+    BooleanField, EmailField, DateField, DateTimeField, ForeignKey, OneToOneField, FloatField
 from django.contrib.auth.models import User
 from .user_desc import CodeAccountType, CodeRole, CodeUserStatus
 from .org import Org
@@ -55,3 +55,19 @@ class UserOrg(Model):
 
     def __unicode__(self):
         return u'{0}@{1}'.format(self.user.username, self.org.name)
+
+
+class Version(Model):
+    version = FloatField(verbose_name='版本')
+    url = CharField(max_length=100, verbose_name='下载地址')
+    comments = TextField(verbose_name='更新内容')
+    created_date = DateTimeField(auto_now_add=True, verbose_name='更新日期')
+
+    class Meta:
+        app_label = 'education'
+        db_table = 'version'
+        verbose_name = 'APP 版本'
+        verbose_name_plural = 'APP 版本'
+
+    def __unicode__(self):
+        return u'{0}版'.format(self.version)

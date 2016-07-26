@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
-from education.models import Profile, Org, Notice
+from education.models import Profile, Org, Notice, Version
 
 
 class UserSerializers(serializers.ModelSerializer):
@@ -21,6 +22,11 @@ class UserSerializers(serializers.ModelSerializer):
         user.save()
 
         return user
+
+    def update(self, instance, validated_data):
+        print('rest password')
+        validated_data['password'] = make_password(validated_data['password'])
+        return super(UserSerializers, self).update(instance, validated_data)
 
 
 class ProfileSerializers(serializers.ModelSerializer):
@@ -42,4 +48,11 @@ class NoticeSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Notice
-        field = ('title', 'created_by', 'created_date', 'content')
+        fields = ('title', 'created_by', 'created_date', 'content')
+
+
+class VersionSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Version
+        fields = ('version', 'url', 'comments', 'created_date')
+        read_only_fields = ('version', 'url', 'comments', 'created_date')
