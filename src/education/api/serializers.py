@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 
-from education.models import Profile, Org, Notice, Version
+from education import models
 
 
 class UserSerializers(serializers.ModelSerializer):
@@ -24,7 +24,6 @@ class UserSerializers(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        print('rest password')
         validated_data['password'] = make_password(validated_data['password'])
         return super(UserSerializers, self).update(instance, validated_data)
 
@@ -33,13 +32,13 @@ class ProfileSerializers(serializers.ModelSerializer):
     user = serializers.ReadOnlyField(source='user.pk')
 
     class Meta:
-        model = Profile
+        model = models.Profile
         fields = ('user', 'email')
 
 
 class OrgSerializers(serializers.ModelSerializer):
     class Meta:
-        model = Org
+        model = models.Org
         fields = ('pk', 'name',)
 
 
@@ -47,12 +46,28 @@ class NoticeSerializers(serializers.ModelSerializer):
     created_by = serializers.ReadOnlyField(source='created_by.username')
 
     class Meta:
-        model = Notice
+        model = models.Notice
         fields = ('title', 'created_by', 'created_date', 'content')
 
 
 class VersionSerializers(serializers.ModelSerializer):
     class Meta:
-        model = Version
+        model = models.Version
         fields = ('version', 'url', 'comments', 'created_date')
         read_only_fields = ('version', 'url', 'comments', 'created_date')
+
+
+class KeyTeacherSerializers(serializers.ModelSerializer):
+    teacher_name = serializers.ReadOnlyField(source='teacher.username')
+
+    class Meta:
+        model = models.KeyTeacher
+        fields = ('teacher_name', 'details')
+
+
+class KeySchoolSerializers(serializers.ModelSerializer):
+    school_name = serializers.ReadOnlyField(source='org.name')
+
+    class Meta:
+        model = models.KeySchool
+        fields = ('school_name', 'type')

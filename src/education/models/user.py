@@ -57,6 +57,22 @@ class UserOrg(Model):
         return u'{0}@{1}'.format(self.user.username, self.org.name)
 
 
+class KeyTeacher(Model):
+    # 名师
+    teacher = ForeignKey(User, db_column='user_id', verbose_name='教师')
+    type = IntegerField(blank=True, default=10, verbose_name='等级')
+    details = CharField(max_length=20, blank=True, default='')
+
+    class Meta:
+        app_label = 'education'
+        db_table = 'keyteacher'
+        verbose_name = '名牌教师'
+        verbose_name_plural = '名牌教师'
+
+    def __unicode__(self):
+        return u'{0}'.format(self.teacher.username)
+
+
 class Version(Model):
     version = FloatField(verbose_name='版本')
     url = CharField(max_length=100, verbose_name='下载地址')

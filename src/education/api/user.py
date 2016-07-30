@@ -5,9 +5,10 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 
-from education.models import Profile, Org, Notice, NoticeTo, UserOrg, Version
+from education.models import Profile, Org, Notice, \
+    NoticeTo, UserOrg, Version, KeyTeacher, KeySchool
 from education.api.serializers import UserSerializers, ProfileSerializers, \
-    OrgSerializers, NoticeSerializers, VersionSerializers
+    OrgSerializers, NoticeSerializers, VersionSerializers, KeyTeacherSerializers, KeySchoolSerializers
 from education.utils import convert_timezone
 
 
@@ -75,3 +76,13 @@ class VersionViewSet(viewsets.ModelViewSet):
         queryset = Version.objects.all().last()
         serializer = VersionSerializers(queryset)
         return Response(serializer.data)
+
+
+class KeyTeacherViewSet(viewsets.ModelViewSet):
+    queryset = KeyTeacher.objects.all()
+    serializer_class = KeyTeacherSerializers
+
+
+class KeySchoolViewSet(viewsets.ModelViewSet):
+    queryset = KeySchool.objects.all()
+    serializer_class = KeySchoolSerializers

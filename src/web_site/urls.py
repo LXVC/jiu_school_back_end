@@ -16,22 +16,24 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from education.api import CreateToken, UsersViewSet, UsersProfileViewSet, OrgViewSet, NoticeViewSet, VersionViewSet
+from education import api
 from rest_framework import routers
 from rest_framework.authtoken.models import Token
 
 apiRouter = routers.DefaultRouter()
-apiRouter.register(r'users', UsersViewSet, 'Users')
-apiRouter.register(r'profile', UsersProfileViewSet, 'Profile')
-apiRouter.register(r'org', OrgViewSet, 'Org')
-apiRouter.register(r'notices', NoticeViewSet, 'Notice')
-apiRouter.register(r'version', VersionViewSet, 'Version')
+apiRouter.register(r'users', api.UsersViewSet, 'Users')
+apiRouter.register(r'profile', api.UsersProfileViewSet, 'Profile')
+apiRouter.register(r'org', api.OrgViewSet, 'Org')
+apiRouter.register(r'notices', api.NoticeViewSet, 'Notice')
+apiRouter.register(r'version', api.VersionViewSet, 'Version')
+apiRouter.register(r'keyteacher', api.KeyTeacherViewSet, 'Keyteacher')
+apiRouter.register(r'keyschool', api.KeySchoolViewSet, 'KeySchool')
 
 admin.site.unregister(Token)
 
 urlpatterns = [
     url(r'^admin/v1/', include(admin.site.urls)),
     url(r'^api/v1/auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api/v1/get-token/', CreateToken.as_view()),
+    url(r'^api/v1/get-token/', api.CreateToken.as_view()),
     url(r'^api/v1/', include(apiRouter.urls)),
 ]

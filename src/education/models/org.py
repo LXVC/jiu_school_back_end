@@ -72,8 +72,8 @@ class KeySchool(Model):
     class Meta:
         app_label = 'education'
         db_table = 'keyschool'
-        verbose_name = '重点学校'
-        verbose_name_plural = '重点学校'
+        verbose_name = '名牌学校'
+        verbose_name_plural = '名牌学校'
 
     def __unicode__(self):
         return u'{0}-{1}'.format(self.org.name, self.type)
