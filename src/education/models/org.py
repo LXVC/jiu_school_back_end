@@ -39,6 +39,19 @@ class CodeEduPeriod(Model):
         return u'{0}'.format(self.edu_period_name)
 
 
+class CodeGrade(Model):
+    grade_name = CharField(max_length=10, verbose_name='年级', blank=True, default='初一')
+
+    class Meta:
+        app_label = 'education'
+        db_table = 'grades'
+        verbose_name = '年级'
+        verbose_name_plural = '年级'
+
+    def __unicode__(self):
+        return u'{0}'.format(self.grade_name)
+
+
 class Org(Model):
     # 组织模型表
     parent = ForeignKey('self', db_column='parent_id', null=True, blank=True, verbose_name='上级组织')
@@ -52,6 +65,7 @@ class Org(Model):
     sort = IntegerField(blank=True, default=2)
     status = SmallIntegerField(default=0, blank=2, verbose_name='状态')
     created_date = DateTimeField(blank=True, auto_now_add=True, verbose_name='创建日期')
+    grade = ForeignKey(CodeGrade, db_column='grade', blank=True, null=True, verbose_name='年级')
     comments = CharField(max_length=500, blank=True, verbose_name='备注')
 
     class Meta:
