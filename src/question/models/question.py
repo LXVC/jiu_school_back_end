@@ -7,26 +7,33 @@ from education.models import Org
 
 
 class Question(Model):
-    ref = ForeignKey('self', db_column='ref_id', null=True, related_name='distortion')
-    charpter = ForeignKey(Charpter, db_column='charpter_id', related_name='questions')
-    content = TextField()
-    type = ForeignKey(CodeQuesthionType, db_column='type', related_name='questions')
-    owner = ForeignKey(Org, db_column='owner', related_name='own_questions')
-    answer = TextField()
-    answer_type = ForeignKey(CodeContextType, db_column='answer_type')
-    difficultly = SmallIntegerField(default=1)
-    solve = TextField()
+    ref = ForeignKey('self', db_column='ref_id', blank=True,
+                     null=True, related_name='distortion', verbose_name='原题')
+    charpter = ForeignKey(Charpter, db_column='charpter_id', related_name='questions', verbose_name='归属章节')
+    content = TextField(verbose_name='题目内容')
+    type = ForeignKey(CodeQuesthionType, db_column='type', related_name='questions', verbose_name='题目类型')
+    owner = ForeignKey(Org, db_column='owner', related_name='own_questions', verbose_name='所有人')
+    answer = TextField(blank=True, default='', verbose_name='回答')
+    answer_type = ForeignKey(CodeContextType, db_column='answer_type', verbose_name='答题类型')
+    difficultly = SmallIntegerField(default=1, verbose_name='难度')
+    solve = TextField(blank=True, default='', verbose_name='解析')
     created_date = DateTimeField(auto_now_add=True)
-    created_by = ForeignKey(User, db_column='created_by', related_name='created_questions')
-    edit_by = ForeignKey(User, db_column='edit_by', related_name='edited_questions', null=True)
-    status = SmallIntegerField(default=1)
-    share = NullBooleanField(null=True)
-    library = ForeignKey(Library, db_column='library_id')
-    comments = CharField(max_length=500, blank=True)
+    created_by = ForeignKey(User, db_column='created_by', related_name='created_questions', verbose_name='创建者')
+    edit_by = ForeignKey(User, db_column='edit_by', related_name='edited_questions',
+                         null=True, blank=True, verbose_name='编辑者')
+    status = SmallIntegerField(default=1, verbose_name='状态')
+    share = NullBooleanField(null=True, default=False, verbose_name='是否可以分享')
+    library = ForeignKey(Library, db_column='library_id', verbose_name='图书馆')
+    comments = CharField(max_length=500, blank=True, verbose_name='备注')
 
     class Meta:
         app_label = 'question'
         db_table = 'questions'
+        verbose_name = '题目'
+        verbose_name_plural = '题目'
+
+    def __unicode__(self):
+        return u'{0}...'.format(self.comments[:10])
 
 
 class Material(Model):

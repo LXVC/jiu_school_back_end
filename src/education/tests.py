@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.utils import timezone
 from .models.user_desc import CodeRole, CodeAccountType, CodeUserStatus
 from django.contrib.auth.models import User
-from .models.user import Profile, UserOrg
+from .models.user import Profile, UserOrg, KeyTeacher
 from .models.org import Area, CodeEduPeriod, Org, KeySchool
 from .models.notice import Notice, NoticeTo
 
@@ -35,10 +35,6 @@ edu_period.save()
 org = Org(parent=None, area=area, name='衡阳县第一中学', edu_period=edu_period, type='中学')
 org.save()
 
-# init 重点中学数据
-key_school = KeySchool(org=org)
-key_school.save()
-
 # init Profile 用户配置文件
 profile = Profile(user=User.objects.get(pk=2), account_id='13788740727', account_type=account_type,
                   role=role, username='qzw', login_name='lxvc', md5passwdstr='md5',
@@ -60,3 +56,11 @@ notice.save()
 # init NoticeTo 通知和用户,组织多对多表
 notice_to = NoticeTo(notice=notice, org=org)
 notice_to.save()
+
+# init Keyschool 名校数据
+school = KeySchool(org=org)
+school.save()
+
+# init Keyteacher 名师数据
+teacher = KeyTeacher(teacher=User.objects.get(pk=1), details='湖南特级教师')
+teacher.save()
