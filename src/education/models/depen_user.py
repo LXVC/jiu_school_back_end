@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-
 from django.db.models import Model, CharField, EmailField, ForeignKey, DateTimeField, OneToOneField
 from .user import Profile
 from .user_desc import CodeUserStatus

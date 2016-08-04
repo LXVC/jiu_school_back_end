@@ -37,13 +37,19 @@ class Question(Model):
 
 
 class Material(Model):
-    ref = ForeignKey('self', db_column='ref_id', null=True)
-    content = TextField()
-    created_by = ForeignKey(User, related_name='created_materials', db_column='created_by')
-    edit_by = ForeignKey(User, related_name='edited_materials', db_column='edit_by', null=True)
-    created_date = DateTimeField(auto_now_add=True)
-    comments = TextField(blank=True)
+    ref = ForeignKey('self', db_column='ref_id', null=True, blank=True, verbose_name='原材料')
+    title = CharField(max_length=20, blank=True, verbose_name='标题')
+    content = TextField(verbose_name='正文')
+    created_by = ForeignKey(User, related_name='created_materials', db_column='created_by', verbose_name='创建者')
+    edit_by = ForeignKey(User, related_name='edited_materials', db_column='edit_by', null=True, verbose_name='编辑者')
+    created_date = DateTimeField(auto_now_add=True, verbose_name='创建日期')
+    comments = TextField(blank=True, verbose_name='备注')
 
     class Meta:
         app_label = 'question'
         db_table = 'materials'
+        verbose_name = '材料'
+        verbose_name_plural = '材料'
+
+    def __unicode__(self):
+        return u'{0}'.format(self.title)
