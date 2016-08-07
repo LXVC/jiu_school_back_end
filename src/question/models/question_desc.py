@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.db.models import Model, ForeignKey, CharField, BooleanField, SmallIntegerField
+from mptt.models import MPTTModel, TreeForeignKey
 from education.models import Org
 
 
@@ -70,10 +71,10 @@ class CodeSubject(Model):
         return u'{0}'.format(self.subject_name)
 
 
-class Charpter(Model):
+class Charpter(MPTTModel):
     title = CharField(max_length=200, verbose_name='章节')
     subject = ForeignKey(CodeSubject, db_column='subject', verbose_name='科目')
-    parent = ForeignKey('self', null=True, blank=True, db_column='parent_id', verbose_name='父章节')
+    parent = TreeForeignKey('self', null=True, blank=True, db_column='parent_id', verbose_name='父章节', related_name='children')
     path = CharField(max_length=200, verbose_name='位置')
     level = SmallIntegerField(default=0, verbose_name='级别')
     owner = ForeignKey(Org, db_column='owner', verbose_name='拥有者')

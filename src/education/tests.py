@@ -24,7 +24,7 @@ user_status = CodeUserStatus()
 user_status.save()
 
 # init Area 数据
-area = Area(parent=None, path='中国湖南省衡阳市衡阳县', name='衡阳县', short_name='衡阳', )
+area = Area(parent=None, name='衡阳县', short_name='衡阳', )
 area.save()
 
 # init EduPeriod 学段数据

@@ -1,25 +1,27 @@
 # -*- coding:utf-8 -*-
 from django.db.models import Model, CharField, IntegerField, ForeignKey, \
     FloatField, SmallIntegerField, DateTimeField
+from mptt.models import MPTTModel, TreeForeignKey
 
 
-class Area(Model):
+class Area(MPTTModel):
     # 地区表
-    parent = ForeignKey('self', db_column='parent_id', null=True, blank=True, verbose_name=u'上级')
-    path = CharField(max_length=200, blank=True, verbose_name=u'具体位置')
-    name = CharField(max_length=50, blank=True, verbose_name=u'名称')
-    short_name = CharField(max_length=50, blank=True, verbose_name=u'简称')
-    longitude = FloatField(blank=True, default=1.1, null=True, verbose_name=u'经度')
-    latitude = FloatField(blank=True, default=2.2, null=True, verbose_name=u'纬度')
-    level = SmallIntegerField(blank=True, default=4, verbose_name=u'级别')
+    parent = TreeForeignKey('self', db_column='parent_id', null=True, blank=True, related_name='children',
+                            verbose_name='上级')
+    # path = CharField(max_length=200, blank=True, verbose_name='具体位置')
+    # level = SmallIntegerField(blank=True, default=4, verbose_name='级别')
+    name = CharField(max_length=50, blank=True, verbose_name='名称')
+    short_name = CharField(max_length=50, blank=True, verbose_name='简称')
+    longitude = FloatField(blank=True, default=1.1, null=True, verbose_name='经度')
+    latitude = FloatField(blank=True, default=2.2, null=True, verbose_name='纬度')
     sort = IntegerField(blank=True, default=1)
-    status = SmallIntegerField(blank=True, default=2, verbose_name=u'状态')
+    status = SmallIntegerField(blank=True, default=2, verbose_name='状态')
 
     class Meta:
         app_label = 'education'
         db_table = 'area'
-        verbose_name = u'地区'
-        verbose_name_plural = u'地区'
+        verbose_name = '地区'
+        verbose_name_plural = '地区'
 
     def __unicode__(self):
         return u'{0}'.format(self.name)
@@ -52,15 +54,16 @@ class CodeGrade(Model):
         return u'{0}'.format(self.grade_name)
 
 
-class Org(Model):
+class Org(MPTTModel):
     # 组织模型表
-    parent = ForeignKey('self', db_column='parent_id', null=True, blank=True, verbose_name='上级组织')
+    parent = TreeForeignKey('self', db_column='parent_id', null=True, blank=True, related_name='children',
+                            verbose_name='上级组织')
     area = ForeignKey(Area, db_column='area_id', verbose_name='地区')
     name = CharField(max_length=50, blank=True, default='XX中学', verbose_name='组织名称')
     edu_period = ForeignKey(CodeEduPeriod, db_column='edu_period', verbose_name='学段')
     size = IntegerField(blank=True, default=1200, verbose_name='总人数')
-    path = CharField(max_length=200, default='湖南', blank=True, verbose_name='具体地址')
-    level = SmallIntegerField(blank=True, default=1, verbose_name='级别')
+    # path = CharField(max_length=200, default='湖南', blank=True, verbose_name='具体地址')
+    # level = SmallIntegerField(blank=True, default=1, verbose_name='级别')
     type = CharField(max_length=10, default='学校', verbose_name='组织类型')
     sort = IntegerField(blank=True, default=2)
     status = SmallIntegerField(default=0, blank=2, verbose_name='状态')

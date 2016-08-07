@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 from django.db.models import Model, ForeignKey, CharField, IntegerField, DateTimeField, SmallIntegerField
-from .question import Question
+from mptt.models import MPTTModel, TreeForeignKey
 from django.contrib.auth.models import User
 from education.models import Org
+from .question import Question
 
 
 class QuestionsDyndifficulty(Model):
@@ -21,13 +22,12 @@ class QuestionsDyndifficulty(Model):
         return u'{0}'.format(str(self.diffcultty))
 
 
-class KnowegePoint(Model):
+class KnowegePoint(MPTTModel):
     title = CharField(max_length=100, verbose_name='知识点名字')
-    parent = ForeignKey('self', db_column='parent_id', blank=True, null=True)
+    parent = TreeForeignKey('self', db_column='parent_id', blank=True, null=True, related_name='children',
+                            verbose_name='父知识点')
     ref_count = IntegerField(default=0, verbose_name='引用次数')
     created_by = ForeignKey(User, db_column='created_by', related_name='created_knowege_points', verbose_name='创建者')
-    level = SmallIntegerField(default=0)
-    path = CharField(max_length=500, default='')
     owner = ForeignKey(Org, db_column='owner', related_name='own_knowege_points', verbose_name='拥有者')
     created_date = DateTimeField(auto_now_add=True, verbose_name='创建时间')
 
