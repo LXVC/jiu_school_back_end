@@ -19,7 +19,7 @@ def update(drop_data=None):
         finally:
             run('git pull ' + git_host)
             if drop_data is not None:
-                run('mysql -u root')
+                run('mycli -u root')
             run(inter_path + 'pip install' + ' -r requirement.txt')
             run(inter_path + 'python '  + app_path + 'src/manage.py' + ' migrate')
             run('nohup ' + inter_path + 'python '  + app_path + 'src/manage.py' +' runserver ' + host)
@@ -28,4 +28,5 @@ def update(drop_data=None):
 
 def init():
     with cd(app_path + 'src'):
-        run(inter_path + 'python '  + app_path + 'src/manage.py' + ' test')
+        run(inter_path + 'python '  + app_path + 'src/manage.py' + ' test' + ' education/')
+        run(inter_path + 'python '  + app_path + 'src/manage.py' + ' test' + ' question/')
