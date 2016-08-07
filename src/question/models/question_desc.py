@@ -19,7 +19,9 @@ class Library(Model):
 
 
 class CodeQuesthionType(Model):
-    questhion_type_name = CharField(max_length=20, verbose_name='题目类型')
+    type = ((u'主观题', u'主观题'),
+            (u'客观题', u'客观题'))
+    questhion_type_name = CharField(max_length=20, verbose_name='题目类型', choices=type)
 
     class Meta:
         app_label = 'question'
@@ -32,7 +34,9 @@ class CodeQuesthionType(Model):
 
 
 class CodeContextType(Model):
-    context_type_name = CharField(max_length=20, verbose_name='答案类型')
+    type = ((u'文字', u'文字'),
+            (u'图片', u'图片'))
+    context_type_name = CharField(max_length=20, verbose_name='答案类型', choices=type)
 
     class Meta:
         app_label = 'question'

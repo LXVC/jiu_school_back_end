@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+  登录
+{% endblock %}
+{% block style %}
+  <style>
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    main {
+      margin-top: 50px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn {
+      width: 100%;
+    }
+    .btn:focus {
+      outline: none;
+    }
+  </style>
+{% endblock %}
+
+{% block main %}
+  <h1>欢迎使用作业后台系统</h1>
+  <main class="col-lg-4 col-lg-offset-4">
+    {% if form.errors %}
+      <p class="alert alert-danger" role="alert">
+        帐号或者密码不正确
+        <span class="close"></span>
+      </p>
+    {% endif %}
+    {% if next %}
+      {% if user.is_authenticated %}
+        <p>你没有访问该页面的权限,请重新登录</p>
+      {% else %}
+        <p>登录查看该页面</p>
+      {% endif %}
+    {% endif %}
+    <form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="username">帐号</label>
+        <input type="text" class="form-control" id="username" placeholder="帐号" name="username">
+      </div>
+      <div class="form-group">
+        <label for="password">密码</label>
+        <input type="password" class="form-control" id="password" placeholder="密码" name="password">
+      </div>
+      <input type="submit" value="login" class="btn btn-primary">
+    </form>
+  </main>
+{% endblock %}

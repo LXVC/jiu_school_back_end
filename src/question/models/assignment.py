@@ -1,6 +1,6 @@
 # -*- coding:utf-8 -*-
 from django.db.models import Model, ForeignKey, CharField, \
-    IntegerField, DateTimeField, NullBooleanField, TextField
+    IntegerField, DateTimeField, NullBooleanField, TextField, FloatField
 from django.contrib.auth.models import User
 from education.models import Org
 from .question import Question
@@ -40,7 +40,7 @@ class Assignment(Model):
     charpter = ForeignKey(Charpter, db_column='charpter_id', related_name='assignments', verbose_name='所属章节')
     owner = ForeignKey(Org, db_column='owner', related_name='own_assignments', verbose_name='拥有者')
     status = ForeignKey(CodeAssignmentStatus, db_column='status', verbose_name='状态')
-    published_count = IntegerField(default=1, verbose_name='提交数')
+    published_count = IntegerField(default=0, verbose_name='发布数')
     created_date = DateTimeField(auto_now_add=True, verbose_name='创建日期')
     type = ForeignKey(CodeAssignmentType, db_column='type', verbose_name='作业类型')
     comments = CharField(max_length=500, blank=True, verbose_name='备注')
@@ -53,6 +53,19 @@ class Assignment(Model):
 
     def __unicode__(self):
         return u'{0}'.format(self.title)
+
+
+class AssignmentQuestions(Model):
+    assignment = ForeignKey(Assignment, db_column='assignment_id')
+    question = ForeignKey(Question, db_column='question_id')
+    score = FloatField()
+    extra = CharField(max_length=500, blank=True, default='')
+
+    class Meta:
+        app_label = 'question'
+        db_table = 'assignment_questions'
+        verbose_name = '作业与题目'
+        verbose_name_plural = '作业与题目'
 
 
 class AssignmentPublish(Model):

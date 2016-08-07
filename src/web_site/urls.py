@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from education import api
+from question import views as question_view
 from rest_framework import routers
 from rest_framework.authtoken.models import Token
 
@@ -32,6 +33,8 @@ apiRouter.register(r'keyschool', api.KeySchoolViewSet, 'KeySchool')
 admin.site.unregister(Token)
 
 urlpatterns = [
+    url(r'^$', question_view.index),
+    url(r'^', include('django.contrib.auth.urls')),
     url(r'^admin/v1/', include(admin.site.urls)),
     url(r'^api/v1/auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/v1/get-token/', api.CreateToken.as_view()),
