@@ -4,7 +4,7 @@ from question import models
 admin.site.register(models.Question)
 admin.site.register(models.Material)
 admin.site.register(models.Library)
-admin.site.register(models.CodeQuesthionType)
+# admin.site.register(models.CodeQuesthionType)
 admin.site.register(models.CodeContextType)
 admin.site.register(models.CodeSubject)
 admin.site.register(models.Charpter)

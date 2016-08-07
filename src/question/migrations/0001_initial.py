@@ -9,8 +9,8 @@ from django.conf import settings
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('education', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('education', '0001_initial'),
     ]
 
     operations = [
@@ -35,18 +35,19 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('share', models.NullBooleanField(default=False, verbose_name=b'\xe6\x98\xaf\xe5\x90\xa6\xe5\x88\x86\xe4\xba\xab')),
-                ('publish_date', models.DateTimeField(verbose_name=b'\xe6\x8f\x90\xe4\xba\xa4\xe6\x97\xa5\xe6\x9c\x9f', blank=True)),
-                ('publish_date_start', models.DateTimeField(verbose_name=b'\xe6\x9c\x80\xe6\x97\xa9\xe6\x8f\x90\xe4\xba\xa4\xe6\x97\xb6\xe9\x97\xb4', blank=True)),
-                ('publish_date_end', models.DateTimeField(verbose_name=b'\xe6\x9c\x80\xe6\x99\x9a\xe6\x8f\x90\xe4\xba\xa4\xe6\x97\xb6\xe9\x97\xb4', blank=True)),
+                ('created_date', models.DateTimeField(auto_now_add=True, verbose_name=b'\xe5\x88\x9b\xe5\xbb\xba\xe6\x97\xb6\xe9\x97\xb4')),
+                ('publish_date', models.DateTimeField(auto_now_add=True, verbose_name=b'\xe6\x8c\x87\xe5\xae\x9a\xe5\x8f\x91\xe5\xb8\x83\xe6\x97\xa5\xe6\x9c\x9f')),
+                ('submit_date_start', models.DateTimeField(auto_now_add=True, verbose_name=b'\xe6\x9c\x80\xe6\x97\xa9\xe6\x8f\x90\xe4\xba\xa4\xe6\x97\xb6\xe9\x97\xb4')),
+                ('submit_date_end', models.DateTimeField(verbose_name=b'\xe6\x9c\x80\xe6\x99\x9a\xe6\x8f\x90\xe4\xba\xa4\xe6\x97\xb6\xe9\x97\xb4')),
                 ('comments', models.CharField(max_length=500, verbose_name=b'\xe5\xa4\x87\xe6\xb3\xa8', blank=True)),
                 ('assignment', models.ForeignKey(db_column=b'assignment_id', verbose_name=b'\xe4\xbd\x9c\xe4\xb8\x9a', to='question.Assignment')),
-                ('publisher', models.ForeignKey(db_column=b'publisher', verbose_name=b'\xe6\x8f\x90\xe4\xba\xa4\xe4\xba\xba', to=settings.AUTH_USER_MODEL)),
+                ('publisher', models.ForeignKey(db_column=b'publisher', verbose_name=b'\xe5\x8f\x91\xe5\xb8\x83\xe4\xba\xba', to=settings.AUTH_USER_MODEL)),
                 ('reciver_org', models.ForeignKey(db_column=b'reciver_org', verbose_name=b'\xe6\x8e\xa5\xe6\x94\xb6\xe7\xbb\x84\xe7\xbb\x87', to='education.Org')),
             ],
             options={
                 'db_table': 'assignment_publish',
-                'verbose_name': '\u4f5c\u4e1a\u63d0\u4ea4\u60c5\u51b5',
-                'verbose_name_plural': '\u4f5c\u4e1a\u63d0\u4ea4\u60c5\u51b5',
+                'verbose_name': '\u4f5c\u4e1a\u53d1\u5e03\u60c5\u51b5',
+                'verbose_name_plural': '\u4f5c\u4e1a\u53d1\u5e03\u60c5\u51b5',
             },
         ),
         migrations.CreateModel(
@@ -67,16 +68,16 @@ class Migration(migrations.Migration):
             name='AssignmentSubmit',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('context', models.TextField(verbose_name=b'\xe5\x86\x85\xe5\xae\xb9')),
+                ('context', models.TextField(verbose_name=b'\xe5\x9b\x9e\xe7\xad\x94\xe5\x86\x85\xe5\xae\xb9')),
                 ('start_date', models.DateTimeField(verbose_name=b'\xe5\xbc\x80\xe5\xa7\x8b\xe6\x97\xb6\xe9\x97\xb4', blank=True)),
                 ('submit_date', models.DateTimeField(verbose_name=b'\xe6\x8f\x90\xe4\xba\xa4\xe6\x97\xb6\xe9\x97\xb4', blank=True)),
                 ('comment', models.CharField(max_length=500, verbose_name=b'\xe5\xa4\x87\xe6\xb3\xa8', blank=True)),
-                ('assignment_publish', models.ForeignKey(db_column=b'assignment_publish_id', verbose_name=b'\xe4\xbd\x9c\xe4\xb8\x9a\xe6\x8f\x90\xe4\xba\xa4', to='question.AssignmentPublish')),
+                ('assignment_publish', models.ForeignKey(db_column=b'assignment_publish_id', verbose_name=b'\xe5\x8f\x91\xe5\xb8\x83\xe7\x9a\x84\xe4\xbd\x9c\xe4\xb8\x9a', to='question.AssignmentPublish')),
             ],
             options={
                 'db_table': 'assignment_submit',
-                'verbose_name': '\u4f5c\u4e1a\u63d0\u4ea4\u72b6\u6001',
-                'verbose_name_plural': '\u4f5c\u4e1a\u63d0\u4ea4\u72b6\u6001',
+                'verbose_name': '\u63d0\u4ea4\u7684\u4f5c\u4e1a',
+                'verbose_name_plural': '\u63d0\u4ea4\u7684\u4f5c\u4e1a',
             },
         ),
         migrations.CreateModel(
@@ -93,8 +94,8 @@ class Migration(migrations.Migration):
             ],
             options={
                 'db_table': 'assignment_submit_detail',
-                'verbose_name': '\u4f5c\u4e1a\u8be6\u60c5',
-                'verbose_name_plural': '\u4f5c\u4e1a\u8be6\u60c5',
+                'verbose_name': '\u63d0\u4ea4\u4f5c\u4e1a\u8be6\u60c5',
+                'verbose_name_plural': '\u63d0\u4ea4\u4f5c\u4e1a\u8be6\u60c5',
             },
         ),
         migrations.CreateModel(
@@ -102,12 +103,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=200, verbose_name=b'\xe7\xab\xa0\xe8\x8a\x82')),
-                ('path', models.CharField(max_length=200, verbose_name=b'\xe4\xbd\x8d\xe7\xbd\xae')),
-                ('level', models.SmallIntegerField(default=0, verbose_name=b'\xe7\xba\xa7\xe5\x88\xab')),
-                ('comment', models.CharField(max_length=500, verbose_name=b'\xe5\xa4\x87\xe6\xb3\xa8', blank=True)),
+                ('comment', models.CharField(default=b'', max_length=500, verbose_name=b'\xe5\xa4\x87\xe6\xb3\xa8', blank=True)),
                 ('lft', models.PositiveIntegerField(editable=False, db_index=True)),
                 ('rght', models.PositiveIntegerField(editable=False, db_index=True)),
                 ('tree_id', models.PositiveIntegerField(editable=False, db_index=True)),
+                ('level', models.PositiveIntegerField(editable=False, db_index=True)),
                 ('owner', models.ForeignKey(db_column=b'owner', verbose_name=b'\xe6\x8b\xa5\xe6\x9c\x89\xe8\x80\x85', to='education.Org')),
                 ('parent', mptt.fields.TreeForeignKey(related_name='children', db_column=b'parent_id', blank=True, to='question.Charpter', null=True, verbose_name=b'\xe7\x88\xb6\xe7\xab\xa0\xe8\x8a\x82')),
             ],
@@ -133,7 +133,7 @@ class Migration(migrations.Migration):
             name='CodeAssignmentType',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('assignment_type_name', models.CharField(default=b'\xe6\x97\xa5\xe5\xb8\xb8\xe4\xbd\x9c\xe4\xb8\x9a', max_length=50, verbose_name=b'\xe7\xb1\xbb\xe5\x9e\x8b')),
+                ('assignment_type_name', models.CharField(max_length=50, verbose_name=b'\xe7\xb1\xbb\xe5\x9e\x8b')),
             ],
             options={
                 'db_table': 'code_assignment_type',
@@ -145,7 +145,7 @@ class Migration(migrations.Migration):
             name='CodeContextType',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('context_type_name', models.CharField(max_length=20, verbose_name=b'\xe7\xad\x94\xe6\xa1\x88\xe7\xb1\xbb\xe5\x9e\x8b', choices=[('\u6587\u5b57', '\u6587\u5b57'), ('\u56fe\u7247', '\u56fe\u7247')])),
+                ('context_type_name', models.CharField(max_length=20, verbose_name=b'\xe7\xad\x94\xe6\xa1\x88\xe7\xb1\xbb\xe5\x9e\x8b')),
             ],
             options={
                 'db_table': 'code_context_type',
@@ -157,7 +157,7 @@ class Migration(migrations.Migration):
             name='CodeQuesthionType',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('questhion_type_name', models.CharField(max_length=20, verbose_name=b'\xe9\xa2\x98\xe7\x9b\xae\xe7\xb1\xbb\xe5\x9e\x8b', choices=[('\u4e3b\u89c2\u9898', '\u4e3b\u89c2\u9898'), ('\u5ba2\u89c2\u9898', '\u5ba2\u89c2\u9898')])),
+                ('questhion_type_name', models.CharField(max_length=20, verbose_name=b'\xe9\xa2\x98\xe7\x9b\xae\xe7\xb1\xbb\xe5\x9e\x8b')),
             ],
             options={
                 'db_table': 'code_questhion_type',
@@ -169,7 +169,7 @@ class Migration(migrations.Migration):
             name='CodeSubject',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('subject_name', models.CharField(max_length=20, verbose_name=b'\xe7\xa7\x91\xe7\x9b\xae', choices=[('\u8bed\u6587', '\u8bed\u6587'), ('\u6570\u5b66', '\u6570\u5b66'), ('\u82f1\u8bed', '\u82f1\u8bed'), ('\u7269\u7406', '\u7269\u7406'), ('\u5316\u5b66', '\u5316\u5b66'), ('\u751f\u7269', '\u751f\u7269'), ('\u5386\u53f2', '\u5386\u53f2'), ('\u5730\u7406', '\u5730\u7406'), ('\u653f\u6cbb', '\u653f\u6cbb')])),
+                ('subject_name', models.CharField(max_length=20, verbose_name=b'\xe7\xa7\x91\xe7\x9b\xae')),
             ],
             options={
                 'db_table': 'code_subject',
@@ -181,7 +181,7 @@ class Migration(migrations.Migration):
             name='CodeSubmitStatus',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('submit_status_name', models.CharField(max_length=20, verbose_name=b'\xe7\x8a\xb6\xe6\x80\x81', choices=[(b'\xe6\x9c\xaa\xe5\x81\x9a', b'\xe6\x9c\xaa\xe5\x81\x9a'), (b'\xe5\xae\x8c\xe6\x88\x90', b'\xe5\xae\x8c\xe6\x88\x90'), (b'\xe8\x8d\x89\xe7\xa8\xbf', b'\xe8\x8d\x89\xe7\xa8\xbf'), (b'\xe8\xbf\x87\xe6\x9c\x9f', b'\xe8\xbf\x87\xe6\x9c\x9f')])),
+                ('submit_status_name', models.CharField(max_length=20, verbose_name=b'\xe7\x8a\xb6\xe6\x80\x81')),
             ],
             options={
                 'db_table': 'code_submit_status',
@@ -216,12 +216,12 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('library_name', models.CharField(max_length=100, verbose_name=b'\xe5\x90\x8d\xe5\xad\x97')),
                 ('public', models.BooleanField(default=False, verbose_name=b'\xe6\x98\xaf\xe5\x90\xa6\xe5\x85\xac\xe5\xbc\x80')),
-                ('owner', models.ForeignKey(db_column=b'owner', verbose_name=b'\xe6\x8b\xa5\xe6\x9c\x89\xe8\x80\x85', to='education.Org')),
+                ('owner', models.ForeignKey(related_name='owner_librarys', db_column=b'owner', verbose_name=b'\xe6\x8b\xa5\xe6\x9c\x89\xe8\x80\x85', to='education.Org')),
             ],
             options={
                 'db_table': 'library',
-                'verbose_name': '\u56fe\u4e66\u9986',
-                'verbose_name_plural': '\u56fe\u4e66\u9986',
+                'verbose_name': '\u9898\u5e93',
+                'verbose_name_plural': '\u9898\u5e93',
             },
         ),
         migrations.CreateModel(
@@ -273,7 +273,7 @@ class Migration(migrations.Migration):
             name='QuestionKnowlegePoint',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('index', models.ForeignKey(db_column=b'index', verbose_name=b'\xe7\x9f\xa5\xe8\xaf\x86\xe7\x82\xb9', to='question.KnowegePoint')),
+                ('knowege_point', models.ForeignKey(db_column=b'knowege_point', verbose_name=b'\xe7\x9f\xa5\xe8\xaf\x86\xe7\x82\xb9', to='question.KnowegePoint')),
                 ('questhion', models.ForeignKey(db_column=b'questhion_id', verbose_name=b'\xe9\xa2\x98\xe7\x9b\xae', to='question.Question')),
             ],
             options={
@@ -301,6 +301,9 @@ class Migration(migrations.Migration):
             name='WeakPoint',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('created_date', models.DateTimeField(auto_now_add=True)),
+                ('comments', models.CharField(default=b'', max_length=500, blank=True)),
+                ('assignment_publish', models.ForeignKey(db_column=b'assignment_publish_id', verbose_name=b'\xe4\xbd\x9c\xe4\xb8\x9a', to='question.AssignmentPublish')),
                 ('question', models.ForeignKey(db_column=b'question_id', verbose_name=b'\xe9\xa2\x98\xe7\x9b\xae', to='question.Question')),
                 ('user', models.ForeignKey(db_column=b'user_id', verbose_name=b'\xe5\xad\xa6\xe7\x94\x9f', to=settings.AUTH_USER_MODEL)),
             ],
@@ -353,7 +356,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='assignment',
             name='owner',
-            field=models.ForeignKey(related_name='own_assignments', db_column=b'owner', verbose_name=b'\xe6\x8b\xa5\xe6\x9c\x89\xe8\x80\x85', to='education.Org'),
+            field=models.ForeignKey(related_name='own_assignments', db_column=b'owner', verbose_name=b'\xe6\x8b\xa5\xe6\x9c\x89\xe7\xbb\x84\xe7\xbb\x87', to='education.Org'),
         ),
         migrations.AddField(
             model_name='assignment',

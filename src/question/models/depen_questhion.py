@@ -43,7 +43,7 @@ class KnowegePoint(MPTTModel):
 
 class QuestionKnowlegePoint(Model):
     questhion = ForeignKey(Question, db_column='questhion_id', verbose_name='题目')
-    index = ForeignKey(KnowegePoint, db_column='index', verbose_name='知识点')
+    knowege_point = ForeignKey(KnowegePoint, db_column='knowege_point', verbose_name='知识点')
 
     class Meta:
         app_label = 'question'
@@ -53,17 +53,3 @@ class QuestionKnowlegePoint(Model):
 
     def __unicode__(self):
         return u'{0}...——{1}'.format(self.questhion.content[:5], self.index.title)
-
-
-class WeakPoint(Model):
-    user = ForeignKey(User, db_column='user_id', verbose_name='学生')
-    question = ForeignKey(Question, db_column='question_id', verbose_name='题目')
-
-    class Meta:
-        app_label = 'question'
-        db_table = 'weak_point'
-        verbose_name = '学生的薄弱知识'
-        verbose_name_plural = '学生的薄弱知识'
-
-    def __unicode__(self):
-        return u'{0}——{1}'.format(self.user.username, self.question.content[:10])
