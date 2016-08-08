@@ -1,7 +1,10 @@
 # -*- coding:utf-8 -*-
-from django.db.models import Model, ForeignKey, CharField, BooleanField, SmallIntegerField
+from django.db.models import Model, ForeignKey, CharField, BooleanField
 from mptt.models import MPTTModel, TreeForeignKey
 from education.models import Org
+
+
+# from question.api import CharpterSerializers
 
 
 class Library(Model):
@@ -67,6 +70,20 @@ class Charpter(MPTTModel):
     # level = SmallIntegerField(default=0, verbose_name='级别')
     owner = ForeignKey(Org, db_column='owner', verbose_name='拥有者')
     comment = CharField(max_length=500, blank=True, default='', verbose_name='备注')
+
+    def get_children_details(self):
+        ret = []
+        if self.get_level() == 0:
+            family = self.get_family()
+            for i in family:
+                item = dict()
+                item['id'] = i.id
+                item['title'] = i.title
+                item['level'] = i.level
+                ret.append(item)
+            return ret
+        else:
+            return []
 
     class Meta:
         app_label = 'question'

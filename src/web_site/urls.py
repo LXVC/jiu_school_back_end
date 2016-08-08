@@ -17,6 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 from education import api
+from question import api as question_api
 from question import views as question_view
 from rest_framework import routers
 from rest_framework.authtoken.models import Token
@@ -29,6 +30,7 @@ apiRouter.register(r'notices', api.NoticeViewSet, 'Notice')
 apiRouter.register(r'version', api.VersionViewSet, 'Version')
 apiRouter.register(r'keyteacher', api.KeyTeacherViewSet, 'Keyteacher')
 apiRouter.register(r'keyschool', api.KeySchoolViewSet, 'KeySchool')
+apiRouter.register(r'charters', question_api.CharpterViewSet, 'Charters')
 
 admin.site.unregister(Token)
 
