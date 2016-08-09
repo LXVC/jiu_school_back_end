@@ -62,7 +62,10 @@ ROOT_URLCONF = 'web_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates', 'education/templates', 'question/templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),
+                 os.path.join(BASE_DIR, 'education/templates'),
+                 os.path.join(BASE_DIR, 'question/templates')
+                 ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -112,7 +115,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = ('static',)
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
