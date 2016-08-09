@@ -19,6 +19,7 @@
     .btn {
       width: 100%;
     }
+
     .btn:focus {
       outline: none;
     }
@@ -36,9 +37,13 @@
     {% endif %}
     {% if next %}
       {% if user.is_authenticated %}
-        <p>你没有访问该页面的权限,请重新登录</p>
+        <p class="alert alert-danger" role="alert">
+          你没有访问该页面的权限,请重新登录
+        </p>
       {% else %}
-        <p>登录查看该页面</p>
+        <p class="alert alert-danger" role="alert">
+          登录查看该页面
+        </p>
       {% endif %}
     {% endif %}
     <form method="post" action="{% url 'django.contrib.auth.views.login' %}">

@@ -2,21 +2,53 @@
 {% load mptt_tags %}
 
 {% block title %}
-  新建问题
+  选择操作
 {% endblock %}
 
+{% block style %}
+  <style>
+    h1 {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    a.navbar-brand:hover {
+      color: #2aabd2 !important;
+    }
+
+    li {
+      list-style: none;
+      margin-top: 40px;
+    }
+  </style>
+{% endblock %}
 {% block main %}
-  <h1>新建问题</h1>
+  <nav class="navbar navbar-light bg-faded">
+    <div class="nav navbar-nav">
+      <a class="navbar-brand" href="/">
+        首页
+      </a>
+      {#      <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>#}
+      {#      <a class="nav-item nav-link" href="#">Pricing</a>#}
+      {#      <a class="nav-item nav-link" href="#">About</a>#}
+    </div>
+  </nav>
+  <h1>{{ user.get_username }} 老师,欢迎使用本系统,您想做的操作是?</h1>
   <ul>
-    {% for d in data %}
-      <li>
-        {{ d.title }}
-        <ul>
-          {% for child in d.children_details %}
-            <li>{{ child.title }}</li>
-          {% endfor %}
-        </ul>
-      </li>
-    {% endfor %}
+    <li>
+      <a href="{% url 'question.views.select_charpter' goto='question' %}"
+         class="btn btn-primary btn-lg btn-block">
+        新建题目
+      </a>
+    </li>
+    <li>
+      <a href="{% url 'question.views.select_charpter' goto='assignment' %}"
+         class="btn btn-primary btn-lg btn-block">
+        新建作业
+      </a>
+    </li>
+    <li>
+      <a href="#" class="btn btn-primary btn-lg btn-block">发布作业</a>
+    </li>
   </ul>
 {% endblock %}
