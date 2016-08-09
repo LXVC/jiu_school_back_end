@@ -6,6 +6,9 @@
 
 {% block main %}
   <h1>选择章节</h1>
+  {% if next %}
+    <p class="alert alert-danger">你还没有选择章节</p>
+  {% endif %}
   <form action="{% url 'question.views.select_charpter' goto=goto %}" method="post">
     {% csrf_token %}
     {% for charpter in charpters %}

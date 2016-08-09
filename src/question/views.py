@@ -22,12 +22,18 @@ def select_charpter(request, goto):
                                                                  'charpters': charpters})
     if request.method == 'POST':
         charpter_id = request.POST.get('charpter_id', None)
-        if goto == 'question':
-            return redirect(add_question, charpter_id)
-        elif goto == 'assignment':
-            return redirect(add_assignment, charpter_id)
+        if charpter_id:
+            if goto == 'question':
+                return redirect(add_question, charpter_id)
+            elif goto == 'assignment':
+                return redirect(add_assignment, charpter_id)
+            else:
+                raise Http404
         else:
-            raise Http404
+            charpters = question_models.Charpter.objects.all()
+            return render(request, 'question/select_charpter.html', {'goto': goto,
+                                                                     'charpters': charpters,
+                                                                     'next': True})
 
 
 @login_required
