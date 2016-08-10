@@ -36,13 +36,13 @@
   <h1>{{ user.get_username }} 老师,欢迎使用本系统,您想做的操作是?</h1>
   <ul>
     <li>
-      <a href="{% url 'question.views.select_charpter' goto='question' %}"
+      <a href="{% url 'question.views.select_subject' goto='question' %}"
          class="btn btn-primary btn-lg btn-block">
         新建题目
       </a>
     </li>
     <li>
-      <a href="{% url 'question.views.select_charpter' goto='assignment' %}"
+      <a href="{% url 'question.views.select_subject' goto='assignment' %}"
          class="btn btn-primary btn-lg btn-block">
         新建作业
       </a>

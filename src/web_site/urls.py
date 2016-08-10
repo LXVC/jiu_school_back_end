@@ -36,9 +36,10 @@ admin.site.unregister(Token)
 
 urlpatterns = [
     url(r'^$', question_view.index),
-    url(r'^select_charter/(?P<goto>\w+)/$', question_view.select_charpter),
-    url(r'^(?P<charpter_id>\d+)/add_question/$', question_view.add_question),
-    url(r'^(?P<charpter_id>\d+)/add_assignment/$', question_view.add_assignment),
+    url(r'^select_subject/(?P<goto>\w+)/$', question_view.select_subject),
+    url(r'^(?P<subject_id>\d+)/select_charter/(?P<goto>\w+)/$', question_view.select_charpter),
+    url(r'^(?P<subject_id>\d+)/(?P<charpter_id>\d+)/add_question/$', question_view.add_question),
+    url(r'^(?P<subject_id>\d+)/(?P<charpter_id>\d+)/add_assignment/$', question_view.add_assignment),
     url(r'^', include('django.contrib.auth.urls')),
     url(r'^admin/v1/', include(admin.site.urls)),
     url(r'^api/v1/auth/', include('rest_framework.urls', namespace='rest_framework')),

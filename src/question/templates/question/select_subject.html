@@ -1,0 +1,23 @@
+{% extends 'base/base.html' %}
+
+{% block title %}
+  选择科目
+{% endblock %}
+
+{% block style %}
+  <style>
+    .btn {
+      margin-top: 40px;
+      margin-bottom: 10px;
+    }
+  </style>
+{% endblock %}
+
+{% block main %}
+  {% for subject in subjects %}
+    <a href="{% url 'question.views.select_charpter' subject_id=subject.id goto=goto %}"
+       class="btn btn-primary btn-block btn-lg">
+      去给 {{ subject.subject_name }} 添加题目
+    </a>
+  {% endfor %}
+{% endblock %}

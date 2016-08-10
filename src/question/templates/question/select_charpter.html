@@ -1,4 +1,5 @@
 {% extends 'base/base.html' %}
+{% load mptt_tags %}
 
 {% block title %}
   选择章节
@@ -9,12 +10,21 @@
   {% if next %}
     <p class="alert alert-danger">你还没有选择章节</p>
   {% endif %}
-  <form action="{% url 'question.views.select_charpter' goto=goto %}" method="post">
+  <form action="{% url 'question.views.select_charpter' subject_id=subject_id goto=goto %}" method="post">
     {% csrf_token %}
-    {% for charpter in charpters %}
-      <input type="radio" name="charpter_id" value="{{ charpter.id }}" id="{{ charpter.id }}">
-      <label for="{{ charpter.id }}">{{ charpter.title }}</label>
-    {% endfor %}
+    <ul>
+      {% recursetree nodes %}
+        <li>
+          <input type="radio" id="{{ node.id }}" name="charpter_id" value="{{ node.id }}">
+          <label for="{{ node.id }}">{{ node.title }}</label>
+          {% if not node.is_leaf_node %}
+            <ul class="children">
+              {{ children }}
+            </ul>
+          {% endif %}
+        </li>
+      {% endrecursetree %}
+    </ul>
     {% if goto == 'question' %}
       <input type="submit" value="选好了,去新建题目!" class="btn btn-success">
     {% elif goto == 'assignment' %}
