@@ -17,7 +17,12 @@
   {% for subject in subjects %}
     <a href="{% url 'question.views.select_charpter' subject_id=subject.id goto=goto %}"
        class="btn btn-primary btn-block btn-lg">
-      去给 {{ subject.subject_name }} 添加题目
+      去给 {{ subject.subject_name }} 添加
+      {% if goto == 'question' %}
+        题目
+      {% elif goto == 'assignment' %}
+        作业
+      {% endif %}
     </a>
   {% endfor %}
 {% endblock %}
