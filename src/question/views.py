@@ -55,9 +55,15 @@ def select_charpter(request, subject_id, goto):
 
 @login_required
 def add_question(request, subject_id, charpter_id):
-    subject = get_object_or_404(question_models.CodeSubject, pk=subject_id)
-    charpter = get_object_or_404(question_models.Charpter, pk=charpter_id)
-    return render(request, 'question/add_question.html', {'charpter': charpter, 'subject': subject})
+    if request.method == 'GET':
+        subject = get_object_or_404(question_models.CodeSubject, pk=subject_id)
+        charpter = get_object_or_404(question_models.Charpter, pk=charpter_id)
+        return render(request, 'question/add_question.html', {'charpter': charpter, 'subject': subject})
+    elif request.method == 'POST':
+        print(request.POST.get('work', ''))
+        subject = get_object_or_404(question_models.CodeSubject, pk=subject_id)
+        charpter = get_object_or_404(question_models.Charpter, pk=charpter_id)
+        return render(request, 'question/add_question.html', {'charpter': charpter, 'subject': subject})
 
 
 @login_required

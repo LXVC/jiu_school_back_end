@@ -1,9 +1,28 @@
 {% extends 'base/base.html' %}
-
+{% load static %}
 {% block title %}
   添加题目
 {% endblock %}
+{% block style %}
+  <link rel="stylesheet" href="{% static 'css/umeditor.min.css' %}">
+{% endblock %}
+
 
 {% block main %}
   <h1>给 {{ subject.subject_name }} {{ charpter.title }} 添加题目</h1>
+  <form action="{% url 'question.views.add_question' subject_id=subject.id charpter_id=charpter.id %}" method="post">
+    {% csrf_token %}
+    <script id="container" name="work" type="text/plain" style="width:800px;height:300px"></script>
+    <input type="submit" value="提交">
+  </form>
+
+  <script src="{% static 'js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/umeditor.config.js' %}"></script>
+  <script src="{% static 'js/umeditor.min.js' %}"></script>
+  <script src="{% static 'js/zh-cn.js' %}"></script>
+
+  <script type="text/javascript">
+    var um = UM.getEditor('container');
+  </script>
+
 {% endblock %}
