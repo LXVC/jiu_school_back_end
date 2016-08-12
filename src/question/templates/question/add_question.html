@@ -1,18 +1,31 @@
 {% extends 'base/base.html' %}
 {% load static %}
+
 {% block title %}
   添加题目
 {% endblock %}
+
 {% block style %}
   <link rel="stylesheet" href="{% static 'css/umeditor.min.css' %}">
 {% endblock %}
 
-
 {% block main %}
+
   <h1>给 {{ subject.subject_name }} {{ charpter.title }} 添加题目</h1>
+
   <form action="{% url 'question.views.add_question' subject_id=subject.id charpter_id=charpter.id %}" method="post">
     {% csrf_token %}
-    <script id="container" name="work" type="text/plain" style="width:800px;height:300px"></script>
+    <script id="container" name="content" type="text/plain" style="width:800px;height:300px"></script>
+    <select name="question_type">
+      {% for type in content_type %}
+        <option value="{{ type.id }}">{{ type.questhion_type_name }}</option>
+      {% endfor %}
+    </select>
+    <select name="answer_type">
+      {% for type in answer_type %}
+        <option value="{{ type.id }}">{{ type.context_type_name }}</option>
+      {% endfor %}
+    </select>
     <input type="submit" value="提交">
   </form>
 
