@@ -14,3 +14,12 @@ class CharpterSerializers(serializers.ModelSerializer):
 
     def get_children_details(self, obj):
         return obj.get_children_details()
+
+
+class AssignmentSerializers(serializers.ModelSerializer):
+    assignment_name = serializers.ReadOnlyField(source='assignment.title')
+    assignment_id = serializers.ReadOnlyField(source='assignment.id')
+
+    class Meta:
+        model = models.AssignmentPublish
+        fields = ('id', 'assignment_name', 'assignment_id')

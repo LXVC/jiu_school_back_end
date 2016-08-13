@@ -1,4 +1,5 @@
 import sys
+
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -30,7 +31,7 @@ def select_subject(request, goto):
 @login_required
 def select_charpter(request, subject_id, goto):
     if request.method == 'GET':
-        if goto not in ['question',  'assignment']:
+        if goto not in ['question', 'assignment']:
             raise Http404
         return render(request,
                       'question/select_charpter.html',

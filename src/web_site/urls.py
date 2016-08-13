@@ -31,6 +31,7 @@ apiRouter.register(r'version', api.VersionViewSet, 'Version')
 apiRouter.register(r'keyteacher', api.KeyTeacherViewSet, 'Keyteacher')
 apiRouter.register(r'keyschool', api.KeySchoolViewSet, 'KeySchool')
 apiRouter.register(r'charters', question_api.CharpterViewSet, 'Charters')
+apiRouter.register(r'assignments', question_api.AssignmentViewSet, 'Assignment')
 
 admin.site.unregister(Token)
 

@@ -67,6 +67,9 @@ class AssignmentQuestions(Model):
         verbose_name = '作业与题目'
         verbose_name_plural = '作业与题目'
 
+    def __unicode__(self):
+        return u'{0}-{1}'.format(self.assignment.title, self.question.content[:10])
+
 
 class AssignmentPublish(Model):
     assignment = ForeignKey(Assignment, db_column='assignment_id', verbose_name='作业')
