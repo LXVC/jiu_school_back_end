@@ -22,4 +22,14 @@ class AssignmentSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = models.AssignmentPublish
-        fields = ('id', 'assignment_name', 'assignment_id')
+        fields = ('id', 'assignment_name', 'assignment_id', 'publish_date')
+
+
+class AssignmentDetailsSerializers(serializers.ModelSerializer):
+    assignment_id = serializers.ReadOnlyField(source='assignment.id')
+    question_id = serializers.ReadOnlyField(source='question.id')
+    question_content = serializers.ReadOnlyField(source='question.content')
+
+    class Meta:
+        model = models.AssignmentQuestions
+        fields = ('id', 'assignment_id', 'question_id', 'question_content')
