@@ -12,7 +12,7 @@ class CharpterViewSet(viewsets.ModelViewSet):
     serializer_class = CharpterSerializers
 
 
-class AssignmentViewSet(viewsets.ModelViewSet):
+class AssignmentViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = question_models.AssignmentPublish.objects.all()
     serializer_class = AssignmentSerializers
 
