@@ -4,7 +4,7 @@ from django.utils import timezone
 from .models.user_desc import CodeRole, CodeAccountType, CodeUserStatus
 from django.contrib.auth.models import User
 from .models.user import Profile, UserOrg, KeyTeacher
-from .models.org import Area, CodeEduPeriod, Org, KeySchool
+from .models.org import Area, CodeEduPeriod, Org, KeySchool, CodeOrgType
 from .models.notice import Notice, NoticeTo
 
 # init Users
@@ -31,9 +31,15 @@ area.save()
 edu_period = CodeEduPeriod()
 edu_period.save()
 
+# init OrgType
+types = [u'学校', u'班级', u'小组']
+for i in types:
+    ty_pe = CodeOrgType(org_type_name=i)
+    ty_pe.save()
+
 # init Org 组织数据
 org = Org(parent=None, area=area, name=u'衡阳县第一中学',
-          edu_period=edu_period, type=u'中学')
+          edu_period=edu_period, type_id=1)
 org.save()
 
 # init Profile 用户配置文件

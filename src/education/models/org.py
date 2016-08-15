@@ -54,6 +54,13 @@ class CodeGrade(Model):
         return u'{0}'.format(self.grade_name)
 
 
+class CodeOrgType(Model):
+    org_type_name = CharField(max_length=10)
+
+    def __unicode__(self):
+        return u'{0}'.format(self.org_type_name)
+
+
 class Org(MPTTModel):
     # 组织模型表
     parent = TreeForeignKey('self', db_column='parent_id', null=True, blank=True, related_name='children',
@@ -62,9 +69,7 @@ class Org(MPTTModel):
     name = CharField(max_length=50, blank=True, default='XX中学', verbose_name='组织名称')
     edu_period = ForeignKey(CodeEduPeriod, db_column='edu_period', verbose_name='学段')
     size = IntegerField(blank=True, default=1200, verbose_name='总人数')
-    # path = CharField(max_length=200, default='湖南', blank=True, verbose_name='具体地址')
-    # level = SmallIntegerField(blank=True, default=1, verbose_name='级别')
-    type = CharField(max_length=10, default='学校', verbose_name='组织类型')
+    type = ForeignKey(CodeOrgType, db_column='type',verbose_name='组织类型')
     sort = IntegerField(blank=True, default=2)
     status = SmallIntegerField(default=0, blank=2, verbose_name='状态')
     created_date = DateTimeField(blank=True, auto_now_add=True, verbose_name='创建日期')

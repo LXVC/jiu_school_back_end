@@ -46,6 +46,7 @@ class UserOrg(Model):
     # 用户和组织多对多关系表
     user = ForeignKey(User, db_column='user_id', verbose_name='用户')
     org = ForeignKey(Org, db_column='org_id', verbose_name='组织')
+    is_admin = BooleanField(default=False)
 
     class Meta:
         app_label = 'education'
