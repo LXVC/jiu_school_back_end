@@ -10,10 +10,14 @@ from .models.notice import Notice, NoticeTo
 # init Users
 User.objects.create_superuser('root', '403381161@qq.com', 'root')
 User.objects.create_user('qzw', '403381161@qq.com', 'root')
+User.objects.create_user('teacher', '403381161@qq.com', 'teacher')
+User.objects.create_user('student', '403381161@qq.com', 'student')
 
 # init User 身份数据
-role = CodeRole(role_name=u'学生')
-role.save()
+roles = [u'教务', u'教师', u'学生']
+for r in roles:
+    role = CodeRole(role_name=r)
+    role.save()
 
 # init User 账户类型
 account_type = CodeAccountType()
@@ -43,13 +47,14 @@ org = Org(parent=None, area=area, name=u'衡阳县第一中学',
 org.save()
 
 # init Profile 用户配置文件
-profile = Profile(user=User.objects.get(pk=2), account_id='13788740727', account_type=account_type,
-                  role=role, username='qzw', login_name='lxvc', md5passwdstr='md5',
-                  status=user_status, email='403381161@qq.com', phone='13788740727',
-                  birthday=timezone.now(), idcardnum='...', address=u'中国湖南省衡阳市衡阳县渣江镇',
-                  intro=u'成绩不错', qq='403381161', wechat='403381161', last_login_date=timezone.now(),
-                  last_status_change_date=timezone.now(), head_pic_url='/static/avatar.png')
-profile.save()
+for i in [2, 3, 4]:
+    profile = Profile(user=User.objects.get(pk=i), account_id='13788740727', account_type=account_type,
+                      role_id=i - 1, username='qzw', login_name='lxvc', md5passwdstr='md5',
+                      status=user_status, email='403381161@qq.com', phone='13788740727',
+                      birthday=timezone.now(), idcardnum='...', address=u'中国湖南省衡阳市衡阳县渣江镇',
+                      intro=u'成绩不错', qq='403381161', wechat='403381161', last_login_date=timezone.now(),
+                      last_status_change_date=timezone.now(), head_pic_url='/static/avatar.png')
+    profile.save()
 
 # init UserOrg 个人和组织的关系数据
 user_org = UserOrg(user=User.objects.get(pk=2), org=org)
