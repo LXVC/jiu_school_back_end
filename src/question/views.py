@@ -1,11 +1,6 @@
-import sys
-
-reload(sys)
-sys.setdefaultencoding('utf8')
-
+from __future__ import unicode_literals
 from django.shortcuts import render, Http404, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 
 from question import models as question_models
 from education import models as education_models
@@ -13,8 +8,6 @@ from education import models as education_models
 
 @login_required
 def index(request):
-    # query = question_models.Charpter.objects.filter(level=0)
-    # serializers = CharpterSerializers(query, many=True)
     return render(request, 'question/index.html', {'user': request.user})
 
 

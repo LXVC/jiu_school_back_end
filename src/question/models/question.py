@@ -33,7 +33,7 @@ class Question(Model):
         verbose_name_plural = '题目'
 
     def __unicode__(self):
-        return u'{0}...'.format(self.comments[:10])
+        return u'{0}...'.format(self.content[:10])
 
 
 class Material(Model):
