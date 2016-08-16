@@ -1,6 +1,8 @@
 # -*- coding:utf-8 -*-
 from rest_framework import serializers
 
+from education.utils import convert_timezone
+
 from question import models
 
 
@@ -17,12 +19,22 @@ class CharpterSerializers(serializers.ModelSerializer):
 
 
 class AssignmentSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = models.Assignment
+        fields = '__all__'
+
+
+class AssignmentPublishSerializers(serializers.ModelSerializer):
     assignment_name = serializers.ReadOnlyField(source='assignment.title')
     assignment_id = serializers.ReadOnlyField(source='assignment.id')
+    publish_date = serializers.SerializerMethodField()
 
     class Meta:
         model = models.AssignmentPublish
         fields = ('id', 'assignment_name', 'assignment_id', 'publish_date')
+
+    def get_publish_date(self, obj):
+        return convert_timezone(obj.publish_date)
 
 
 class AssignmentDetailsSerializers(serializers.ModelSerializer):
