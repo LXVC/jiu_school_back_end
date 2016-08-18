@@ -23,14 +23,15 @@ from rest_framework import routers
 from rest_framework.authtoken.models import Token
 
 apiRouter = routers.DefaultRouter()
-apiRouter.register(r'users', api.UsersViewSet, 'Users')
+apiRouter.register(r'users', api.UsersViewSet, 'User')
 apiRouter.register(r'profile', api.UsersProfileViewSet, 'Profile')
 apiRouter.register(r'org', api.OrgViewSet, 'Org')
 apiRouter.register(r'notices', api.NoticeViewSet, 'Notice')
 apiRouter.register(r'version', api.VersionViewSet, 'Version')
 apiRouter.register(r'keyteacher', api.KeyTeacherViewSet, 'Keyteacher')
 apiRouter.register(r'keyschool', api.KeySchoolViewSet, 'KeySchool')
-apiRouter.register(r'charters', question_api.CharpterViewSet, 'Charters')
+apiRouter.register(r'charters', question_api.CharpterViewSet, 'Charter')
+apiRouter.register(r'published_assignments', question_api.AssignmentPublishedViewSet, 'PublishedAssignment')
 apiRouter.register(r'assignments', question_api.AssignmentViewSet, 'Assignment')
 
 admin.site.unregister(Token)

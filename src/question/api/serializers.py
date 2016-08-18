@@ -21,7 +21,7 @@ class CharpterSerializers(serializers.ModelSerializer):
 class AssignmentSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Assignment
-        fields = '__all__'
+        fields = ('id', 'title')
 
 
 class AssignmentPublishSerializers(serializers.ModelSerializer):
