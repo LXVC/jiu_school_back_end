@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'question/base.html' %}
 {% load static %}
 
 {% block title %}
@@ -9,10 +9,22 @@
   <link rel="stylesheet" href="{% static 'css/umeditor.min.css' %}">
 {% endblock %}
 
+{% block nav-item %}
+  <a class="navbar-brand" href="{% url 'question.views.select_subject' goto='question' %}">
+    重新选择科目
+  </a>
+  <a class="navbar-brand" href="{% url 'question.views.select_charpter' subject_id=subject.id goto='question' %}">
+    重新选择章节
+  </a>
+{% endblock %}
 {% block main %}
 
   <h1>给 {{ subject.subject_name }} {{ charpter.title }} 添加题目</h1>
-
+  {% if succeed %}
+    <p class="alert alert-success">
+      题目添加成功!
+    </p>
+  {% endif %}
   <form action="{% url 'question.views.add_question' subject_id=subject.id charpter_id=charpter.id %}" method="post">
     {% csrf_token %}
     <script id="container" name="content" type="text/plain" style="width:800px;height:300px"></script>

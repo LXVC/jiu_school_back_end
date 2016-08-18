@@ -1,10 +1,15 @@
-{% extends 'base/base.html' %}
+{% extends 'question/base.html' %}
 {% load mptt_tags %}
 
 {% block title %}
   选择章节
 {% endblock %}
 
+{% block nav-item %}
+  <a class="navbar-brand" href="{% url 'question.views.select_subject' goto=goto %}">
+    重新选择科目
+  </a>
+{% endblock %}
 {% block main %}
   <h1>选择章节</h1>
   {% if next %}

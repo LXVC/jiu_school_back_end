@@ -8,10 +8,17 @@
     {% endblock %}
   </title>
   {% load staticfiles %}
+  <style>
+    a.navbar-brand:hover {
+      color: #2aabd2 !important;
+    }
+  </style>
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   {% block style %}{% endblock %}
 </head>
 <body>
+{% block nav-content %}
+{% endblock %}
 <div class="container">
   {% block main %}
   {% endblock %}

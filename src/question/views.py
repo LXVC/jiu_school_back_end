@@ -79,6 +79,7 @@ def add_question(request, subject_id, charpter_id):
             owner=owner, answer_type=answer_type, difficultly=difficultly,
             solve=solve, created_by=request.user, edit_by=None, library=library)
         question.save()
+        data['succeed'] = True
         return render(request, 'question/add_question.html', data)
 
 

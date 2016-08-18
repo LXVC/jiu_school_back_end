@@ -1,4 +1,4 @@
-{% extends 'base/base.html' %}
+{% extends 'question/base.html' %}
 {% load mptt_tags %}
 
 {% block title %}
@@ -12,10 +12,6 @@
       margin-top: 40px;
     }
 
-    a.navbar-brand:hover {
-      color: #2aabd2 !important;
-    }
-
     li {
       list-style: none;
       margin-top: 40px;
@@ -23,16 +19,6 @@
   </style>
 {% endblock %}
 {% block main %}
-  <nav class="navbar navbar-light bg-faded">
-    <div class="nav navbar-nav">
-      <a class="navbar-brand" href="/">
-        首页
-      </a>
-      {#      <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>#}
-      {#      <a class="nav-item nav-link" href="#">Pricing</a>#}
-      {#      <a class="nav-item nav-link" href="#">About</a>#}
-    </div>
-  </nav>
   <h1>{{ user.get_username }} 老师,欢迎使用本系统,您想做的操作是?</h1>
   <ul>
     <li>

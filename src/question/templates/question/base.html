@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+
+
+{% block nav-content %}
+  <nav class="navbar navbar-light bg-faded">
+    <div class="nav navbar-nav clearfix">
+      <a class="navbar-brand" href="/">
+        首页
+      </a>
+      {% block nav-item %}{% endblock %}
+      <a class="navbar-brand" style="float: right" href="{% url 'django.contrib.auth.views.logout' %}?next=/">
+        退出
+      </a>
+    </div>
+  </nav>
+{% endblock %}
