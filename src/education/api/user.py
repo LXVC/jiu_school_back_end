@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from education.models import Profile, Org, Notice, \
     NoticeTo, UserOrg, Version, KeyTeacher, KeySchool
 from education.api.serializers import UserSerializers, ProfileSerializers, \
-    OrgSerializers, NoticeSerializers, VersionSerializers, KeyTeacherSerializers, KeySchoolSerializers
+    OrgSerializers, NoticeSerializers, VersionSerializers, KeyTeacherSerializers, \
+    KeySchoolSerializers, UserOrgSerializers
 from education.utils import convert_timezone
 
 
@@ -86,3 +87,13 @@ class KeyTeacherViewSet(viewsets.ModelViewSet):
 class KeySchoolViewSet(viewsets.ModelViewSet):
     queryset = KeySchool.objects.all()
     serializer_class = KeySchoolSerializers
+
+
+class KlassesViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = UserOrg.objects.all()
+    serializer_class = UserOrgSerializers
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.queryset.filter(user=request.user, is_admin=True)
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)

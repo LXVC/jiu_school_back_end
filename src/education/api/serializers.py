@@ -71,3 +71,12 @@ class KeySchoolSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.KeySchool
         fields = ('school_name', 'type')
+
+
+class UserOrgSerializers(serializers.ModelSerializer):
+    org_name = serializers.ReadOnlyField(source='org.name')
+    org_id = serializers.ReadOnlyField(source='org.id')
+
+    class Meta:
+        model = models.UserOrg
+        fields = ('id', 'org_name', 'org_id')
